@@ -65,40 +65,39 @@ router.post('/login', async (req, res) => {
     }
   });
   
-  // ✏️ Update current user's name and email (authenticated)
+  // ✅ Update profile route (flexible: name, email, password - optional)
 router.put('/update-profile', authenticateToken, async (req, res) => {
-  const { name, email, role } = req.body;
+  const { name, email, password } = req.body;
   const userId = req.user.userId;
-  const isAdmin = req.user.role === 'admin';
 
   try {
-    let result;
+    // Get current user from DB
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
 
-    if (isAdmin && role) {
-      // Allow admin to update role too
-      result = await pool.query(
-        `UPDATE users
-         SET name = $1, email = $2, role = $3
-         WHERE id = $4
-         RETURNING id, name, email, role`,
-        [name, email, role, userId]
-      );
-    } else {
-      // Regular users can only update name and email
-      result = await pool.query(
-        `UPDATE users
-         SET name = $1, email = $2
-         WHERE id = $3
-         RETURNING id, name, email, role`,
-        [name, email, userId]
-      );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json({ message: 'Profile updated', user: result.rows[0] });
+    const user = result.rows[0];
+
+    const updatedName = name ?? user.name;
+    const updatedEmail = email ?? user.email;
+    const updatedPassword = password
+      ? await bcrypt.hash(password, 10)
+      : user.password;
+
+    // Run the update
+    await pool.query(
+      `UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4`,
+      [updatedName, updatedEmail, updatedPassword, userId]
+    );
+
+    res.json({ message: 'User updated successfully' });
   } catch (err) {
-    console.error('Error updating profile:', err);
-    res.status(500).json({ message: 'Failed to update profile' });
+    console.error('Error updating user:', err);
+    res.status(500).json({ message: 'Failed to update user' });
   }
 });
+
 
 module.exports = router;
