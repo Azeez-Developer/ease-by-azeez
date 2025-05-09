@@ -93,6 +93,26 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     }
   });
   
-  
+  // 📘 Get status of a specific book
+router.get('/:id/status', async (req, res) => {
+  const bookId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      'SELECT id, title, status FROM books WHERE id = $1',
+      [bookId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching book status:', err);
+    res.status(500).json({ message: 'Failed to fetch book status' });
+  }
+});
+
 
 module.exports = router;

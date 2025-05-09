@@ -93,6 +93,53 @@ router.get('/my-borrows', authenticateToken, async (req, res) => {
       res.status(500).json({ message: 'Failed to fetch borrowed books' });
     }
   });
-  
 
+  // 📌 Get currently borrowed books (not yet returned)
+router.get('/current', authenticateToken, async (req, res) => {
+  const user_id = req.user.userId;
+
+  try {
+    const result = await pool.query(
+      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at
+       FROM borrows br
+       JOIN books bk ON br.book_id = bk.id
+       WHERE br.user_id = $1 AND br.returned_at IS NULL
+       ORDER BY br.borrowed_at DESC`,
+      [user_id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching currently borrowed books:', err);
+    res.status(500).json({ message: 'Failed to fetch active borrows' });
+  }
+});
+
+// ✏️ Update due date (admin or user)
+router.put('/update-due/:book_id', authenticateToken, async (req, res) => {
+  const { due_date } = req.body;
+  const user_id = req.user.userId;
+  const book_id = req.params.book_id;
+
+  try {
+    const result = await pool.query(
+      `UPDATE borrows
+       SET due_date = $1
+       WHERE user_id = $2 AND book_id = $3 AND returned_at IS NULL
+       RETURNING *`,
+      [due_date, user_id, book_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Active borrow not found' });
+    }
+
+    res.json({ message: 'Due date updated', borrow: result.rows[0] });
+  } catch (err) {
+    console.error('Error updating due date:', err);
+    res.status(500).json({ message: 'Failed to update due date' });
+  }
+});
+
+  
 module.exports = router;
