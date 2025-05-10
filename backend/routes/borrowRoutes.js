@@ -5,8 +5,10 @@ const authenticateToken = require('../middlewares/authMiddleware');
 
 // 📚 Borrow a book
 router.post('/', authenticateToken, async (req, res) => {
-  const { book_id, due_date } = req.body;
+  const { book_id } = req.body;
   const user_id = req.user.userId;
+  const due_date  = new Date ();
+  due_date.setDate(due_date.getDate() + 30);
 
   try {
     // Check if the book is available
