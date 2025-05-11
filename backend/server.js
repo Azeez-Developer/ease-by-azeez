@@ -6,8 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const authenticateToken = require('./middlewares/authMiddleware');
 const bookRoutes = require('./routes/bookRoutes');
 const borrowRoutes = require('./routes/borrowRoutes');
-
-
+const donationRoutes = require('./routes/donationRoutes');
 
 
 const app = express();
@@ -18,7 +17,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/borrow', borrowRoutes);
-
+app.use('/api/donations', donationRoutes);
 
 
 app.get('/', (req, res) => {
