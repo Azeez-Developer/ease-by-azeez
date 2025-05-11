@@ -29,11 +29,14 @@ CREATE TABLE IF NOT EXISTS borrows (
 );
 
 -- DONATIONS TABLE
-CREATE TABLE IF NOT EXISTS donations (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  author VARCHAR(100),
-  submitted_by INTEGER REFERENCES users(id),
-  status VARCHAR(20) DEFAULT 'pending', -- pending, approved, rejected
-  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE donations (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255),
+    genre VARCHAR(100),
+    donor_name VARCHAR(100),
+    donor_email VARCHAR(150),
+    status VARCHAR(50) DEFAULT 'pending',  -- pending, approved, rejected
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+

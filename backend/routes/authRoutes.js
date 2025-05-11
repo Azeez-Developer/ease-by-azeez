@@ -10,6 +10,12 @@ const pool = require('../models/db');
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
+  // only .edu users are allowed to sign up and borrow
+  if (!email.toLowerCase().endsWith('.edu')) {
+  return res.status(400).json({ message: 'Only .edu email addresses are allowed for registration.' });
+}
+
+
   try {
     // Check if user already exists
     const existingUser = await findUserByEmail(email);
