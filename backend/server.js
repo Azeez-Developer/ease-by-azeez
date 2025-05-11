@@ -7,6 +7,7 @@ const authenticateToken = require('./middlewares/authMiddleware');
 const bookRoutes = require('./routes/bookRoutes');
 const borrowRoutes = require('./routes/borrowRoutes');
 const donationRoutes = require('./routes/donationRoutes');
+const waitlistRoutes = require('./routes/waitlistRoutes');
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/borrow', borrowRoutes);
 app.use('/api/donations', donationRoutes);
+app.use('/api/waitlist', waitlistRoutes);
 
 
 app.get('/', (req, res) => {
