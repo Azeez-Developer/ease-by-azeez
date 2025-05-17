@@ -7,11 +7,10 @@ const authenticateToken = require('../middlewares/authMiddleware');
 router.post('/', authenticateToken, async (req, res) => {
   const { book_id } = req.body;
   const user_id = req.user.userId;
-  const due_date  = new Date ();
+  const due_date = new Date();
   due_date.setDate(due_date.getDate() + 30);
 
   try {
-    // Check if the book is available
     const bookCheck = await pool.query(
       'SELECT * FROM books WHERE id = $1 AND status = $2',
       [book_id, 'available']
@@ -21,7 +20,6 @@ router.post('/', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Book is not available or does not exist' });
     }
 
-    // Insert borrow record
     const borrow = await pool.query(
       `INSERT INTO borrows (user_id, book_id, due_date)
        VALUES ($1, $2, $3)
@@ -29,7 +27,6 @@ router.post('/', authenticateToken, async (req, res) => {
       [user_id, book_id, due_date]
     );
 
-    // Update book status to "borrowed"
     await pool.query(
       `UPDATE books SET status = 'borrowed' WHERE id = $1`,
       [book_id]
@@ -44,59 +41,63 @@ router.post('/', authenticateToken, async (req, res) => {
 
 // 🔁 Return a book
 router.put('/return/:book_id', authenticateToken, async (req, res) => {
-    const user_id = req.user.userId;
-    const book_id = req.params.book_id;
-  
-    try {
-      // Update borrow record (set returned_at)
-      const result = await pool.query(
-        `UPDATE borrows
-         SET returned_at = CURRENT_TIMESTAMP
-         WHERE user_id = $1 AND book_id = $2 AND returned_at IS NULL
-         RETURNING *`,
-        [user_id, book_id]
-      );
-  
-      if (result.rows.length === 0) {
-        return res.status(404).json({ message: 'No active borrow record found for this book' });
-      }
-  
-      // Update book status back to 'available'
-      await pool.query(
-        `UPDATE books SET status = 'available' WHERE id = $1`,
-        [book_id]
-      );
-  
-      res.json({ message: 'Book returned successfully', borrow: result.rows[0] });
-    } catch (err) {
-      console.error('Error returning book:', err);
-      res.status(500).json({ message: 'Failed to return book' });
-    }
-  });
-  
-  // 📋 Get all books borrowed by the logged-in user
-router.get('/my-borrows', authenticateToken, async (req, res) => {
-    const user_id = req.user.userId;
-  
-    try {
-        const result = await pool.query(
-            `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at, br.returned_at
-             FROM borrows br
-             JOIN books bk ON br.book_id = bk.id
-             WHERE br.user_id = $1
-             ORDER BY br.borrowed_at DESC`,
-            [user_id]
-          );
-          
-  
-      res.json(result.rows);
-    } catch (err) {
-      console.error('Error fetching borrowed books:', err);
-      res.status(500).json({ message: 'Failed to fetch borrowed books' });
-    }
-  });
+  const user_id = req.user.userId;
+  const book_id = req.params.book_id;
 
-  // 📌 Get currently borrowed books (not yet returned)
+  try {
+    const result = await pool.query(
+      `UPDATE borrows
+       SET returned_at = CURRENT_TIMESTAMP
+       WHERE user_id = $1 AND book_id = $2 AND returned_at IS NULL
+       RETURNING *`,
+      [user_id, book_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'No active borrow record found for this book' });
+    }
+
+    await pool.query(
+      `UPDATE books SET status = 'available' WHERE id = $1`,
+      [book_id]
+    );
+
+    // 🔄 Emit real-time event using Socket.IO
+    const io = req.app.get('io');
+    io.emit('bookReturned', {
+      book_id,
+      message: 'A book has been returned and is now available!'
+    });
+
+    res.json({ message: 'Book returned successfully', borrow: result.rows[0] });
+  } catch (err) {
+    console.error('Error returning book:', err);
+    res.status(500).json({ message: 'Failed to return book' });
+  }
+});
+
+// 📋 Get all books borrowed by the logged-in user
+router.get('/my-borrows', authenticateToken, async (req, res) => {
+  const user_id = req.user.userId;
+
+  try {
+    const result = await pool.query(
+      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at, br.returned_at
+       FROM borrows br
+       JOIN books bk ON br.book_id = bk.id
+       WHERE br.user_id = $1
+       ORDER BY br.borrowed_at DESC`,
+      [user_id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching borrowed books:', err);
+    res.status(500).json({ message: 'Failed to fetch borrowed books' });
+  }
+});
+
+// 📌 Get currently borrowed books (not yet returned)
 router.get('/current', authenticateToken, async (req, res) => {
   const user_id = req.user.userId;
 
@@ -143,5 +144,4 @@ router.put('/update-due/:book_id', authenticateToken, async (req, res) => {
   }
 });
 
-  
 module.exports = router;
