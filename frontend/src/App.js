@@ -1,12 +1,15 @@
+// src/App.js
 import React from 'react';
-import RealTimeAlert from './components/RealTimeAlert';
+import HomePage from './pages/HomePage';
+import AppNavbar from './components/Navbar';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>📚 Ease by Azeez</h1>
-      <RealTimeAlert />
-    </div>
+    <>
+      <AppNavbar />
+      <HomePage />
+    </>
   );
 }
 
