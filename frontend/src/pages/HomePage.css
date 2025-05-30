@@ -1,21 +1,22 @@
 /* src/pages/HomePage.css */
 
-/* Remove default browser spacing and hide overflow */
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+body {
+  overflow-y: hidden;
 }
 
+
 .hero-section {
-  background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7); /* soft gradient */
-  padding: 60px 20px;
-  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
+  height: 100vh; /* Full viewport height */
+  padding: 40px 20px 0; /* Reduce or remove bottom padding */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow: hidden; /* Prevent scroll bars */
 }
+
+
 
 .hero-logo {
   width: 350px; 

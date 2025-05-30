@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+/* Navbar background and font style */
+.navbar {
+  background: linear-gradient(to right, #e4ecf7, #d5dfee); /* soft, clean gradient */
+  padding: 10px 0;
+}
+
+/* Make navbar links larger and bold */
+.navbar .nav-link {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333 !important;
+}
+
+/* Hover effect for links */
+.navbar .nav-link:hover {
+  color: #0d6efd !important;
+  text-decoration: underline;
+}
