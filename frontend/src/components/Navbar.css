@@ -8,8 +8,8 @@
 /* Navbar link base style */
 .navbar-nav .nav-link {
   padding: 0.5rem 1.25rem;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;         /* Bold to match brand */
+  font-size: 1.4rem;        /* Match navbar-brand font size */
   color: #343a40;
   transition: color 0.3s ease;
 }
