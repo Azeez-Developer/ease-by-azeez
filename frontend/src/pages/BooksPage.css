@@ -47,3 +47,34 @@ body, html {
   font-size: 1.1rem;
   color: #888;
 }
+
+@media (max-width: 768px) {
+  .books-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .books-subtext {
+    font-size: 1rem;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .books-placeholder {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .books-title {
+    font-size: 1.8rem;
+  }
+
+  .books-subtext {
+    font-size: 0.95rem;
+  }
+
+  .books-placeholder {
+    padding: 25px 15px;
+  }
+}

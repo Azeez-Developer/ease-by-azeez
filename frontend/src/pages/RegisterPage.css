@@ -47,3 +47,35 @@ body, html {
   font-size: 1.1rem;
   color: #888;
 }
+
+@media (max-width: 768px) {
+  .register-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .register-subtext {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .register-placeholder {
+    padding: 30px 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-title {
+    font-size: 1.8rem;
+  }
+
+  .register-subtext {
+    font-size: 0.95rem;
+  }
+
+  .register-placeholder {
+    padding: 25px 15px;
+  }
+}

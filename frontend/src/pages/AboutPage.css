@@ -32,3 +32,35 @@
 .about-text p {
   margin-bottom: 25px;
 }
+
+@media (max-width: 768px) {
+  .about-logo {
+    width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .about-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    padding: 0 15px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-title {
+    font-size: 1.8rem;
+  }
+
+  .about-text {
+    font-size: 0.95rem;
+  }
+
+  .about-logo {
+    width: 180px;
+  }
+}

@@ -1,14 +1,9 @@
-
-/* vertical scroll up & down */
-/* body {
-  overflow-y: hidden;
-} */
-
+/* src/pages/HomePage.css */
 
 .hero-section {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
   height: 100vh; /* Full viewport height */
-  padding: 40px 20px 0; /* Reduce or remove bottom padding */
+  padding: 40px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,10 +11,8 @@
   overflow: hidden; /* Prevent scroll bars */
 }
 
-
-
 .hero-logo {
-  width: 350px; 
+  width: 350px;
   margin-bottom: 20px;
 }
 
@@ -34,6 +27,14 @@
   color: #555;
   margin-bottom: 30px;
   max-width: 600px;
+  text-align: center;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .hero-buttons .btn {
@@ -46,4 +47,90 @@
 .hero-buttons .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .hero-logo {
+    width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons .btn {
+    width: 90%;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-logo {
+    width: 220px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .hero-buttons .btn {
+    padding: 10px 25px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 80px; /* More space from navbar */
+    padding-bottom: 40px; /* Ensure space at the bottom */
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons .btn {
+    width: 80%;
+    max-width: 300px;
+    margin: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-logo {
+    width: 220px;
+    margin-bottom: 15px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
 }

@@ -47,3 +47,35 @@ body, html {
   font-size: 1.1rem;
   color: #888;
 }
+
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .login-subtext {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .login-placeholder {
+    padding: 30px 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-title {
+    font-size: 1.8rem;
+  }
+
+  .login-subtext {
+    font-size: 0.95rem;
+  }
+
+  .login-placeholder {
+    padding: 25px 15px;
+  }
+}

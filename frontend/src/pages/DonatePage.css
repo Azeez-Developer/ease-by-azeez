@@ -46,3 +46,35 @@ body, html {
   font-size: 1.1rem;
   color: #888;
 }
+
+@media (max-width: 768px) {
+  .donate-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .donate-subtext {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .donate-placeholder {
+    padding: 30px 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .donate-title {
+    font-size: 1.8rem;
+  }
+
+  .donate-subtext {
+    font-size: 0.95rem;
+  }
+
+  .donate-placeholder {
+    padding: 25px 15px;
+  }
+}
