@@ -1,0 +1,34 @@
+/* src/pages/AboutPage.css */
+
+.about-section {
+  background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
+  padding: 100px 20px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.about-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.about-text {
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 700px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.about-text p {
+  margin-bottom: 25px;
+}

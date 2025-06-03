@@ -12,8 +12,9 @@ const AppNavbar = () => {
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="ms-auto"> {/* 👈 pushes links to the right */}
         <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/books">BrowseBooks</Nav.Link>
-        <Nav.Link href="/donate">DonateBooks</Nav.Link>
+        <Nav.Link href="/about">About</Nav.Link>
+        <Nav.Link href="/books">Browse</Nav.Link>
+        <Nav.Link href="/donate">Donate</Nav.Link>
         <Nav.Link href="/login">Login</Nav.Link>
         <Nav.Link href="/register">Register</Nav.Link>
       </Nav>
