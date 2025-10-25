@@ -2,6 +2,8 @@
 import React from 'react';
 import './AdminDashboardPage.css'; // Create this CSS file
 import logo from '../assets/ease-logo.png';
+import { Link } from 'react-router-dom';
+
 
 const AdminDashboardPage = () => {
   return (
@@ -18,7 +20,8 @@ const AdminDashboardPage = () => {
         <div className="dashboard-card">
           <h3>Manage Books</h3>
           <p>View, update, and remove books in the system.</p>
-          <button className="btn btn-primary">Go to Books</button>
+          <Link to="/admin/books" className="btn btn-primary">Go to Books</Link>
+
         </div>
         <div className="dashboard-card">
           <h3>Manage Donations</h3>
