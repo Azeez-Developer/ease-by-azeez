@@ -26,17 +26,17 @@ const AdminDashboardPage = () => {
         <div className="dashboard-card">
           <h3>Manage Donations</h3>
           <p>Review incoming donated books and add them to the catalog.</p>
-          <button className="btn btn-primary">Go to Donations</button>
+          <Link to="/admin/donations" className="btn btn-primary">Go to Donations</Link>
         </div>
         <div className="dashboard-card">
           <h3>Borrow Requests</h3>
           <p>View current borrowing activities and approve returns.</p>
-          <button className="btn btn-primary">Go to Borrow Logs</button>
+          <Link to="/admin/borrow-requests" className="btn btn-primary">Go to borrow-requests</Link>
         </div>
         <div className="dashboard-card">
           <h3>Users & Settings</h3>
           <p>Manage users and configure system preferences.</p>
-          <button className="btn btn-primary">Go to Users</button>
+          <Link to="/admin/users" className="btn btn-primary">Go to users</Link>
         </div>
       </div>
     </div>

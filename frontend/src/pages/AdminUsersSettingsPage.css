@@ -1,0 +1,28 @@
+.admin-container {
+  padding: 100px 20px 40px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.admin-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.admin-container p {
+  text-align: center;
+  color: #555;
+  font-size: 1rem;
+}
+
+.admin-placeholder {
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: #f0f4f8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-size: 1.1rem;
+}
