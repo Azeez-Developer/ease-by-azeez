@@ -1,4 +1,4 @@
-/* src/pages/BooksPage.css */
+/* src/pages/user/RegisterPage.css */
 
 * {
   box-sizing: border-box;
@@ -11,10 +11,10 @@ body, html {
   overflow-x: hidden;
 }
 
-.books-section {
+.register-section {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
   padding: 100px 20px 40px;
-  min-height: 100vh; /* Consistent height across devices */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,13 +22,13 @@ body, html {
   overflow: hidden;
 }
 
-.books-title {
+.register-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
-.books-subtext {
+.register-subtext {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 30px;
@@ -36,7 +36,7 @@ body, html {
   text-align: center;
 }
 
-.books-placeholder {
+.register-placeholder {
   background-color: white;
   padding: 40px;
   border-radius: 12px;
@@ -49,32 +49,33 @@ body, html {
 }
 
 @media (max-width: 768px) {
-  .books-title {
+  .register-title {
     font-size: 2rem;
     text-align: center;
   }
 
-  .books-subtext {
+  .register-subtext {
     font-size: 1rem;
-    padding: 0 10px;
     text-align: center;
+    padding: 0 15px;
   }
 
-  .books-placeholder {
+  .register-placeholder {
     padding: 30px 20px;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .books-title {
+  .register-title {
     font-size: 1.8rem;
   }
 
-  .books-subtext {
+  .register-subtext {
     font-size: 0.95rem;
   }
 
-  .books-placeholder {
+  .register-placeholder {
     padding: 25px 15px;
   }
 }

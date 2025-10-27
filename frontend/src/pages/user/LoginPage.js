@@ -1,4 +1,4 @@
-// src/pages/LoginPage.js
+// src/pages/user/LoginPage.js
 import React from 'react';
 import './LoginPage.css';
 

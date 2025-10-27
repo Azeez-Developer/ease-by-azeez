@@ -1,4 +1,4 @@
-// src/pages/RegisterPage.js
+// src/pages/userRegisterPage.js
 import React from 'react';
 import './RegisterPage.css';
 

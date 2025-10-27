@@ -1,6 +1,6 @@
-// src/pages/AboutPage.js
+// src/pages/user/AboutPage.js
 import React from 'react';
-import logo from '../assets/ease-logo.png'; // Adjust if needed
+import logo from '../../assets/ease-logo.png'; // Adjust if needed
 import './AboutPage.css';
 
 const AboutPage = () => {

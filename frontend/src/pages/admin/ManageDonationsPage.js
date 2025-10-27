@@ -1,6 +1,6 @@
-// src/pages/AdminManageDonationsPage.js
+// src/pages/Admin/ManageDonationsPage.js
 import React from 'react';
-import './AdminManageDonationsPage.css';
+import './ManageDonationsPage.css';
 
 const AdminManageDonationsPage = () => {
   return (

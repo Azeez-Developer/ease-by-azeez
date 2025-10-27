@@ -1,4 +1,4 @@
-/* src/pages/DonatePage.css */
+/* src/pages/user/BooksPage.css */
 
 * {
   box-sizing: border-box;
@@ -11,31 +11,32 @@ body, html {
   overflow-x: hidden;
 }
 
-.donate-section {
+.books-section {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
   padding: 100px 20px 40px;
-  min-height: 100vh;
+  min-height: 100vh; /* Consistent height across devices */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: hidden; /* Ensure no scroll bar */
+  overflow: hidden;
 }
 
-.donate-title {
+.books-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
-.donate-subtext {
+.books-subtext {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 30px;
   max-width: 600px;
+  text-align: center;
 }
 
-.donate-placeholder {
+.books-placeholder {
   background-color: white;
   padding: 40px;
   border-radius: 12px;
@@ -48,33 +49,32 @@ body, html {
 }
 
 @media (max-width: 768px) {
-  .donate-title {
+  .books-title {
     font-size: 2rem;
     text-align: center;
   }
 
-  .donate-subtext {
+  .books-subtext {
     font-size: 1rem;
+    padding: 0 10px;
     text-align: center;
-    padding: 0 15px;
   }
 
-  .donate-placeholder {
+  .books-placeholder {
     padding: 30px 20px;
-    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .donate-title {
+  .books-title {
     font-size: 1.8rem;
   }
 
-  .donate-subtext {
+  .books-subtext {
     font-size: 0.95rem;
   }
 
-  .donate-placeholder {
+  .books-placeholder {
     padding: 25px 15px;
   }
 }

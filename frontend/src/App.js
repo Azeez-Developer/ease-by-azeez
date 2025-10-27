@@ -2,17 +2,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppNavbar from './components/Navbar';
-import HomePage from './pages/HomePage';
-import BooksPage from './pages/BooksPage';
-import DonatePage from './pages/DonatePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import AboutPage from './pages/AboutPage';
-import AdminDashboardPage from './pages/AdminDashboardPage';
-import AdminManageBooksPage from './pages/AdminManageBooksPage';
-import AdminManageDonationsPage from './pages/AdminManageDonationsPage';
-import AdminBorrowRequestsPage from './pages/AdminBorrowRequestsPage';
-import AdminUsersSettingsPage from './pages/AdminUsersSettingsPage';
+import HomePage from './pages/user/HomePage';
+import BooksPage from './pages/user/BooksPage';
+import DonatePage from './pages/user/DonatePage';
+import LoginPage from './pages/user/LoginPage';
+import RegisterPage from './pages/user/RegisterPage';
+import AboutPage from './pages/user/AboutPage';
+import DashboardPage from './pages/admin/DashboardPage';
+import ManageBooksPage from './pages/admin/ManageBooksPage';
+import ManageDonationsPage from './pages/admin/ManageDonationsPage';
+import BorrowRequestsPage from './pages/admin/BorrowRequestsPage';
+import UsersSettingsPage from './pages/admin/UsersSettingsPage';
 
 
 function App() {
@@ -29,16 +29,16 @@ const user = { role: 'admin' };
         <Route path="/donate" element={<DonatePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/dashboard" element={<AdminDashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
 
         {/* Admin routes */}
         {user.role === 'admin' && (
           <>
-            <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-            <Route path="/admin/books" element={<AdminManageBooksPage />} />
-            <Route path="/admin/donations" element={<AdminManageDonationsPage />} />
-            <Route path="/admin/borrow-requests" element={<AdminBorrowRequestsPage />} />
-            <Route path="/admin/users" element={<AdminUsersSettingsPage />} />
+            <Route path="/admin/dashboard" element={<DashboardPage />} />
+            <Route path="/admin/books" element={<ManageBooksPage />} />
+            <Route path="/admin/donations" element={<ManageDonationsPage />} />
+            <Route path="/admin/borrow-requests" element={<BorrowRequestsPage />} />
+            <Route path="/admin/users" element={<UsersSettingsPage />} />
           </>
         )}
       </Routes>

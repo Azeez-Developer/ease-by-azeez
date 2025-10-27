@@ -1,4 +1,4 @@
-// src/pages/DonatePage.js
+// src/pages/user/DonatePage.js
 import React from 'react';
 import './DonatePage.css';
 

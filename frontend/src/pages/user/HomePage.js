@@ -1,6 +1,6 @@
-// src/pages/HomePage.js
+// src/pages/user/HomePage.js
 import React from 'react';
-import logo from '../assets/ease-logo.png';
+import logo from '../../assets/ease-logo.png';
 import './HomePage.css';
 
 const HomePage = () => {

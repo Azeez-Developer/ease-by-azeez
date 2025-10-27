@@ -1,4 +1,4 @@
-/* src/pages/RegisterPage.css */
+/* src/pages/user/DonatePage.css */
 
 * {
   box-sizing: border-box;
@@ -11,7 +11,7 @@ body, html {
   overflow-x: hidden;
 }
 
-.register-section {
+.donate-section {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
   padding: 100px 20px 40px;
   min-height: 100vh;
@@ -19,24 +19,23 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: hidden;
+  overflow: hidden; /* Ensure no scroll bar */
 }
 
-.register-title {
+.donate-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
-.register-subtext {
+.donate-subtext {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 30px;
   max-width: 600px;
-  text-align: center;
 }
 
-.register-placeholder {
+.donate-placeholder {
   background-color: white;
   padding: 40px;
   border-radius: 12px;
@@ -49,33 +48,33 @@ body, html {
 }
 
 @media (max-width: 768px) {
-  .register-title {
+  .donate-title {
     font-size: 2rem;
     text-align: center;
   }
 
-  .register-subtext {
+  .donate-subtext {
     font-size: 1rem;
     text-align: center;
     padding: 0 15px;
   }
 
-  .register-placeholder {
+  .donate-placeholder {
     padding: 30px 20px;
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .register-title {
+  .donate-title {
     font-size: 1.8rem;
   }
 
-  .register-subtext {
+  .donate-subtext {
     font-size: 0.95rem;
   }
 
-  .register-placeholder {
+  .donate-placeholder {
     padding: 25px 15px;
   }
 }

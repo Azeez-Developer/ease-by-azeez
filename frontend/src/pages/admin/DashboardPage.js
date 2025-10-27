@@ -1,11 +1,11 @@
-// src/pages/AdminDashboardPage.js
+// src/pages/DashboardPage.js
 import React from 'react';
-import './AdminDashboardPage.css'; // Create this CSS file
-import logo from '../assets/ease-logo.png';
+import './DashboardPage.css'; // Create this CSS file
+import logo from '../../assets/ease-logo.png';
 import { Link } from 'react-router-dom';
 
 
-const AdminDashboardPage = () => {
+const DashboardPage = () => {
   return (
     <div className="admin-dashboard container py-5">
       <div className="text-center mb-4">
@@ -43,4 +43,4 @@ const AdminDashboardPage = () => {
   );
 };
 
-export default AdminDashboardPage;
+export default DashboardPage;

@@ -1,6 +1,6 @@
-// src/pages/AdminManageBooksPage.js
+// src/pages/Admin/ManageBooksPage.js
 import React from 'react';
-import './AdminManageBooksPage.css';
+import './ManageBooksPage.css';
 
 const AdminManageBooksPage = () => {
   return (

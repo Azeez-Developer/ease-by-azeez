@@ -1,11 +1,11 @@
-// src/pages/BooksPage.js
+// src/pages/user/BooksPage.js
 import React from 'react';
 import './BooksPage.css';
 
 const BooksPage = () => {
   return (
     <div className="books-section">
-      <h2 className="books-title">Available Books 📚</h2>
+      <h1 className="books-title">Available Books 📚</h1>
       <p className="books-subtext">
         Browse through the collection of free books you can borrow.
       </p>

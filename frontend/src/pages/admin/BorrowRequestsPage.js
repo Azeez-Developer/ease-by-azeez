@@ -1,6 +1,6 @@
-// src/pages/AdminBorrowRequestsPage.js
+// src/pages/Admin/BorrowRequestsPage.js
 import React from 'react';
-import './AdminBorrowRequestsPage.css';
+import './BorrowRequestsPage.css';
 
 const AdminBorrowRequestsPage = () => {
   return (

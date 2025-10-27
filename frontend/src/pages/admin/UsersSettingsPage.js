@@ -1,6 +1,6 @@
-// src/pages/AdminUsersSettingsPage.js
+// src/pages/Admin/UsersSettingsPage.js
 import React from 'react';
-import './AdminUsersSettingsPage.css';
+import './UsersSettingsPage.css';
 
 const AdminUsersSettingsPage = () => {
   return (
