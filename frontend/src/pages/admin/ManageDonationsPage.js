@@ -1,19 +1,30 @@
-// src/pages/Admin/ManageDonationsPage.js
-import React from 'react';
-import './ManageDonationsPage.css';
+// src/pages/admin/ManageDonationsPage.js
+import React from "react";
+import AdminSidebar from "../../components/AdminSidebar";
+import "./ManageDonationsPage.css";
+import logo from "../../assets/ease-logo.png";
 
-const AdminManageDonationsPage = () => {
+const ManageDonationsPage = () => {
   return (
-    <div className="manage-donations-container">
-      <h2>Manage Donations</h2>
-      <p>This section will allow admins to review and accept/reject donated books.</p>
+    <div className="admin-layout">
+      <AdminSidebar />
+      <div className="admin-content">
+        <div className="admin-page-container text-center">
+          {/* Centered Logo */}
+          <img src={logo} alt="Ease by Azeez Logo" className="admin-logo" />
 
-      {/* Placeholder for donation table */}
-      <div className="donations-placeholder">
-        <p>📦 List of donated books will appear here.</p>
+          <h1 className="admin-page-title">Manage Donations 🎁</h1>
+          <p className="admin-page-subtext">
+            Review and approve donated books before adding them to the library.
+          </p>
+
+          <div className="admin-placeholder">
+            <p>🎀 Donation management features coming soon...</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AdminManageDonationsPage;
+export default ManageDonationsPage;

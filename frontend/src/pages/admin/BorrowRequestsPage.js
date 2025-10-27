@@ -1,18 +1,31 @@
-// src/pages/Admin/BorrowRequestsPage.js
-import React from 'react';
-import './BorrowRequestsPage.css';
+// src/pages/admin/BorrowRequestsPage.js
+import React from "react";
+import AdminSidebar from "../../components/AdminSidebar";
+import "./BorrowRequestsPage.css";
+import logo from "../../assets/ease-logo.png";
 
-const AdminBorrowRequestsPage = () => {
+const BorrowRequestsPage = () => {
   return (
-    <div className="admin-container">
-      <h2>Manage Borrowed Books</h2>
-      <p>This page will allow admins to view and manage borrowed book records.</p>
+    <div className="admin-layout">
+      <AdminSidebar />
+      <div className="admin-content">
+        <div className="admin-page-container text-center">
+          {/* Centered Logo */}
+          <img src={logo} alt="Ease by Azeez Logo" className="admin-logo" />
 
-      <div className="admin-placeholder">
-        📖 Placeholder for borrowed books table.
+          <h1 className="admin-page-title">Borrow Requests 🔄</h1>
+          <p className="admin-page-subtext">
+            View all active borrowing requests, approve or mark returns, and
+            manage book circulation.
+          </p>
+
+          <div className="admin-placeholder">
+            <p>📚 Borrow request management features coming soon...</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AdminBorrowRequestsPage;
+export default BorrowRequestsPage;
