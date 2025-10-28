@@ -15,7 +15,7 @@ const AppNavbar = ({ user }) => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+            {/* <Nav.Link as={NavLink} to="/about">About</Nav.Link> */}
             <Nav.Link as={NavLink} to="/books">Books</Nav.Link>
             <Nav.Link as={NavLink} to="/donate">Donate</Nav.Link>
 
