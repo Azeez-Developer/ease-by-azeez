@@ -16,15 +16,15 @@ const AppNavbar = ({ user }) => {
           <Nav className="ms-auto">
             <Nav.Link as={NavLink} to="/">Home</Nav.Link>
             <Nav.Link as={NavLink} to="/about">About</Nav.Link>
-            <Nav.Link as={NavLink} to="/books">Browse</Nav.Link>
+            <Nav.Link as={NavLink} to="/books">Books</Nav.Link>
             <Nav.Link as={NavLink} to="/donate">Donate</Nav.Link>
 
             {user?.role === 'admin' && (
               <Nav.Link as={NavLink} to="/dashboard">Dashboard</Nav.Link>
             )}
 
-            <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-            <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+            <Nav.Link as={NavLink} to="/login">Login/Register</Nav.Link>
+            {/* <Nav.Link as={NavLink} to="/register">Register</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

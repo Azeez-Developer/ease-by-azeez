@@ -1,21 +1,16 @@
 // src/pages/user/DonatePage.js
-import React from "react";
-import "./DonatePage.css";
-import logo from "../../assets/ease-logo.png";
+import React from 'react';
+import './DonatePage.css';
 
 const DonatePage = () => {
   return (
-    <div className="section-container">
-      {/* Centered Logo */}
-      <img src={logo} alt="Ease by Azeez Logo" className="section-logo" />
-
-      <h1 className="section-title">Donate a Book 📚</h1>
-      <p className="section-subtext">
+    <div className="donate-section text-center">
+      <h1 className="donate-title">Donate a Book 📚</h1>
+      <p className="donate-subtext">
         Give your books a second life by donating them to fellow students.
       </p>
-
-      <div className="section-placeholder">
-        <p>🎁 Donation form coming soon!</p>
+      <div className="donate-placeholder">
+        <p className="coming-soon">Donation form coming soon!</p>
       </div>
     </div>
   );

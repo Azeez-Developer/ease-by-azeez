@@ -1,9 +1,6 @@
-/* src/pages/user/BooksPage.css */
-
-/* === Layout === */
-.section-container {
+.books-section {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
-  padding: 120px 30px 80px;
+  padding: 100px 20px 80px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -12,88 +9,23 @@
   text-align: center;
 }
 
-/* === Logo === */
-.section-logo {
-  width: 200px; /* match About Page */
-  margin-bottom: 4px; /* same tight spacing */
-}
-
-/* === Title === */
-.section-title {
-  font-size: 2.8rem;
+.books-title {
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #1e1e1e;
-  margin-bottom: 25px;
-  letter-spacing: 0.5px;
+  color: #222;
+  margin-bottom: 15px;
 }
 
-/* === Subtext === */
-.section-subtext {
-  font-size: 1.25rem;
-  color: #444;
-  line-height: 1.9;
-  max-width: 700px;
-  margin-bottom: 40px;
-}
-
-/* === Placeholder box === */
-.section-placeholder {
-  background-color: #fff;
-  padding: 45px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px;
-  max-width: 700px;
-}
-
-.section-placeholder p {
+.books-subtext {
   font-size: 1.1rem;
-  color: #666;
+  color: #555;
+  margin-bottom: 30px;
+  max-width: 600px;
 }
 
-/* === Responsive === */
-@media (max-width: 992px) {
-  .section-logo {
-    width: 160px;
-    margin-bottom: 3px;
-  }
-
-  .section-title {
-    font-size: 2.4rem;
-  }
-
-  .section-subtext {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    padding: 0 15px;
-  }
-
-  .section-placeholder {
-    padding: 35px;
-    min-height: 220px;
-  }
-}
-
-@media (max-width: 768px) {
-  .section-logo {
-    width: 130px;
-    margin-bottom: 2px;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .section-subtext {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .section-placeholder {
-    padding: 25px;
-    min-height: 200px;
-  }
+.books-placeholder {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
