@@ -18,23 +18,17 @@ const AdminSidebar = () => {
 
   return (
     <>
-      {/* Hamburger button (hidden when sidebar is open) */}
-      {!isOpen && (
-        <button
-          className="sidebar-toggle"
-          aria-label="Toggle sidebar"
-          onClick={toggleSidebar}
-        >
-          ☰
-        </button>
-      )}
+      {/* Always visible hamburger button */}
+      <button
+        className="sidebar-toggle"
+        aria-label="Toggle sidebar"
+        onClick={toggleSidebar}
+      >
+        ☰
+      </button>
 
       {/* Sidebar Drawer */}
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
-        <div className="sidebar-header">
-          <h2 className="sidebar-title">Admin Panel</h2>
-        </div>
-
         <nav className="sidebar-nav">
           <NavLink
             to="/admin/dashboard"

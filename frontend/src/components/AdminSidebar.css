@@ -6,11 +6,11 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
-  padding: 20px 0;
+  /* increased from 140px → 170px for consistent spacing */
+  padding-top: 170px;  
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   z-index: 999;
   transform: translateX(-100%);
@@ -21,17 +21,6 @@
   transform: translateX(0);
 }
 
-/* ===== Sidebar Header ===== */
-.sidebar-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.sidebar-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #222;
-}
 
 /* ===== Sidebar Nav Links ===== */
 .sidebar-nav {
@@ -78,8 +67,8 @@
 /* ===== Hamburger Button ===== */
 .sidebar-toggle {
   position: fixed;
-  top: 95px; /* placed just below navbar */
-  left: 15px;
+  top: 95px; /* right below navbar */
+  left: 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -87,7 +76,7 @@
   border-radius: 6px;
   padding: 6px 12px;
   cursor: pointer;
-  z-index: 1100;
+  z-index: 1201; /* always on top */
   transition: background 0.2s ease-in-out;
 }
 
@@ -95,7 +84,7 @@
   background-color: #0056b3;
 }
 
-/* ===== Overlay (Dim Background) ===== */
+/* ===== Overlay ===== */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -121,6 +110,7 @@
   .admin-sidebar {
     width: 220px;
   }
+
   .sidebar-link {
     font-size: 0.95rem;
     padding: 10px 12px;
