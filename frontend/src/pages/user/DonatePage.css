@@ -1,80 +1,99 @@
 /* src/pages/user/DonatePage.css */
 
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow-x: hidden;
-}
-
-.donate-section {
+/* === Layout === */
+.section-container {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
-  padding: 100px 20px 40px;
+  padding: 120px 30px 80px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: hidden; /* Ensure no scroll bar */
+  text-align: center;
 }
 
-.donate-title {
-  font-size: 2.5rem;
+/* === Logo === */
+.section-logo {
+  width: 200px; /* match About and Books */
+  margin-bottom: 4px; /* same close spacing */
+}
+
+/* === Title === */
+.section-title {
+  font-size: 2.8rem;
   font-weight: 700;
-  margin-bottom: 15px;
+  color: #1e1e1e;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
 }
 
-.donate-subtext {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 30px;
-  max-width: 600px;
+/* === Subtext === */
+.section-subtext {
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 1.9;
+  max-width: 700px;
+  margin-bottom: 40px;
 }
 
-.donate-placeholder {
-  background-color: white;
-  padding: 40px;
+/* === Placeholder box === */
+.section-placeholder {
+  background-color: #fff;
+  padding: 45px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  max-width: 700px;
 }
 
-.coming-soon {
+.section-placeholder p {
   font-size: 1.1rem;
-  color: #888;
+  color: #666;
 }
 
-@media (max-width: 768px) {
-  .donate-title {
-    font-size: 2rem;
-    text-align: center;
+/* === Responsive === */
+@media (max-width: 992px) {
+  .section-logo {
+    width: 160px;
+    margin-bottom: 3px;
   }
 
-  .donate-subtext {
-    font-size: 1rem;
-    text-align: center;
+  .section-title {
+    font-size: 2.4rem;
+  }
+
+  .section-subtext {
+    font-size: 1.1rem;
+    line-height: 1.8;
     padding: 0 15px;
   }
 
-  .donate-placeholder {
-    padding: 30px 20px;
-    width: 100%;
+  .section-placeholder {
+    padding: 35px;
+    min-height: 220px;
   }
 }
 
-@media (max-width: 480px) {
-  .donate-title {
-    font-size: 1.8rem;
+@media (max-width: 768px) {
+  .section-logo {
+    width: 130px;
+    margin-bottom: 2px;
   }
 
-  .donate-subtext {
-    font-size: 0.95rem;
+  .section-title {
+    font-size: 2rem;
   }
 
-  .donate-placeholder {
-    padding: 25px 15px;
+  .section-subtext {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .section-placeholder {
+    padding: 25px;
+    min-height: 200px;
   }
 }

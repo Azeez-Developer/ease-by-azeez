@@ -1,54 +1,45 @@
 /* src/pages/user/BooksPage.css */
 
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow-x: hidden;
-}
-
 /* === Layout === */
-.books-section {
+.section-container {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
-  padding: 100px 20px 60px; /* space for navbar */
+  padding: 120px 30px 80px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: hidden;
   text-align: center;
 }
 
 /* === Logo === */
-.books-logo {
-  width: 120px;
-  margin-bottom: 25px;
+.section-logo {
+  width: 200px; /* match About Page */
+  margin-bottom: 4px; /* same tight spacing */
 }
 
-/* === Title and subtitle === */
-.books-title {
-  font-size: 2.4rem;
+/* === Title === */
+.section-title {
+  font-size: 2.8rem;
   font-weight: 700;
-  color: #222;
-  margin-bottom: 10px;
+  color: #1e1e1e;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
 }
 
-.books-subtext {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 35px;
-  max-width: 600px;
+/* === Subtext === */
+.section-subtext {
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 1.9;
+  max-width: 700px;
+  margin-bottom: 40px;
 }
 
 /* === Placeholder box === */
-.books-placeholder {
-  background-color: #ffffff;
-  padding: 50px;
+.section-placeholder {
+  background-color: #fff;
+  padding: 45px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -58,43 +49,51 @@ body, html {
   max-width: 700px;
 }
 
-.coming-soon {
+.section-placeholder p {
   font-size: 1.1rem;
   color: #666;
 }
 
 /* === Responsive === */
-@media (max-width: 768px) {
-  .books-logo {
-    width: 100px;
+@media (max-width: 992px) {
+  .section-logo {
+    width: 160px;
+    margin-bottom: 3px;
   }
 
-  .books-title {
-    font-size: 2rem;
+  .section-title {
+    font-size: 2.4rem;
   }
 
-  .books-subtext {
-    font-size: 1rem;
+  .section-subtext {
+    font-size: 1.1rem;
+    line-height: 1.8;
     padding: 0 15px;
   }
 
-  .books-placeholder {
+  .section-placeholder {
     padding: 35px;
-    min-height: 200px;
+    min-height: 220px;
   }
 }
 
-@media (max-width: 480px) {
-  .books-title {
-    font-size: 1.8rem;
+@media (max-width: 768px) {
+  .section-logo {
+    width: 130px;
+    margin-bottom: 2px;
   }
 
-  .books-subtext {
-    font-size: 0.95rem;
+  .section-title {
+    font-size: 2rem;
   }
 
-  .books-placeholder {
-    padding: 25px 15px;
-    min-height: 180px;
+  .section-subtext {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .section-placeholder {
+    padding: 25px;
+    min-height: 200px;
   }
 }

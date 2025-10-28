@@ -1,66 +1,75 @@
 /* src/pages/user/AboutPage.css */
 
-.about-section {
+/* === Layout === */
+.section-container {
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
-  padding: 100px 20px 40px;
+  padding: 120px 30px 80px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-}
-
-.about-logo {
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-.about-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-}
-
-.about-text {
-  font-size: 1.2rem;
-  color: #555;
-  max-width: 700px;
-  line-height: 1.8;
   text-align: center;
 }
 
-.about-text p {
+/* === Logo === */
+.section-logo {
+  width: 200px; /* keep large logo */
+  margin-bottom: 4px; /* even smaller gap between logo and title */
+}
+
+/* === Title === */
+.section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1e1e1e;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+/* === Paragraph text === */
+.section-text {
+  max-width: 800px;
+  color: #444;
+  font-size: 1.25rem;
+  line-height: 1.9;
+  margin: 0 auto;
+}
+
+.section-text p {
   margin-bottom: 25px;
 }
 
-@media (max-width: 768px) {
-  .about-logo {
-    width: 200px;
-    margin-bottom: 20px;
+/* === Responsive Design === */
+@media (max-width: 992px) {
+  .section-logo {
+    width: 160px;
+    margin-bottom: 3px; /* tighter gap */
   }
 
-  .about-title {
-    font-size: 2rem;
-    text-align: center;
+  .section-title {
+    font-size: 2.4rem;
   }
 
-  .about-text {
-    font-size: 1rem;
+  .section-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
     padding: 0 15px;
-    text-align: center;
   }
 }
 
-@media (max-width: 480px) {
-  .about-title {
-    font-size: 1.8rem;
+@media (max-width: 768px) {
+  .section-logo {
+    width: 130px;
+    margin-bottom: 2px; /* minimal spacing */
   }
 
-  .about-text {
-    font-size: 0.95rem;
+  .section-title {
+    font-size: 2rem;
   }
 
-  .about-logo {
-    width: 180px;
+  .section-text {
+    font-size: 1rem;
+    line-height: 1.7;
   }
 }

@@ -5,17 +5,17 @@ import logo from "../../assets/ease-logo.png";
 
 const BooksPage = () => {
   return (
-    <div className="books-section text-center">
+    <div className="section-container">
       {/* Centered Logo */}
-      <img src={logo} alt="Ease by Azeez Logo" className="books-logo" />
+      <img src={logo} alt="Ease by Azeez Logo" className="section-logo" />
 
-      <h1 className="books-title">Available Books 📚</h1>
-      <p className="books-subtext">
+      <h1 className="section-title">Available Books 📚</h1>
+      <p className="section-subtext">
         Browse through the collection of free books you can borrow.
       </p>
 
-      <div className="books-placeholder">
-        <p className="coming-soon">🚧 Book list coming soon...</p>
+      <div className="section-placeholder">
+        <p>🚧 Book list coming soon...</p>
       </div>
     </div>
   );
