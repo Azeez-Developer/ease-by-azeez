@@ -7,7 +7,7 @@ const HomePage = () => {
     <div className="home-section text-center">
       {/* === Hero Section === */}
       <section className="hero-section">
-        <h1 className="hero-title">Welcome to Ease by Azeez 📚</h1>
+        <h1 className="hero-title">Welcome to Ease by Azeez</h1>
 
         {/* === About / Intro Text === */}
         <div className="about-text">

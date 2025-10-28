@@ -5,7 +5,7 @@ import './BooksPage.css';
 const BooksPage = () => {
   return (
     <div className="books-section text-center">
-      <h1 className="books-title">Available Books 📚</h1>
+      <h1 className="books-title">Available Books</h1>
       <p className="books-subtext">
         Browse through the collection of free books you can borrow.
       </p>

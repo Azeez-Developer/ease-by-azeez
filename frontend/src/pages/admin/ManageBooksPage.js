@@ -14,7 +14,7 @@ const ManageBooksPage = () => {
           </p>
 
           <div className="admin-placeholder">
-            <p>📖 Book management features coming soon...</p>
+            <p>Book management features coming soon...</p>
           </div>
         </section>
       </div>
