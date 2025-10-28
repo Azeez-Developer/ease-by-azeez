@@ -1,43 +1,37 @@
-// src/components/AdminSidebar.js
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./AdminSidebar.css";
-import logo from "../assets/ease-logo.png";
 
 const AdminSidebar = () => {
-  const [isOpen, setIsOpen] = useState(window.innerWidth > 768); // Open by default on desktop
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  // Automatically handle resize behavior (open on desktop, closed on mobile)
+  // Close sidebar on resize if necessary
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsOpen(true);
-      } else {
-        setIsOpen(false);
-      }
+      if (window.innerWidth > 768 && isOpen) setIsOpen(false);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isOpen]);
 
   return (
     <>
-      {/* Hamburger toggle (visible on mobile) */}
-      <button
-        className="sidebar-toggle"
-        aria-label="Toggle sidebar"
-        onClick={toggleSidebar}
-      >
-        ☰
-      </button>
+      {/* Hamburger button (hidden when sidebar is open) */}
+      {!isOpen && (
+        <button
+          className="sidebar-toggle"
+          aria-label="Toggle sidebar"
+          onClick={toggleSidebar}
+        >
+          ☰
+        </button>
+      )}
 
       {/* Sidebar Drawer */}
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
         <div className="sidebar-header">
-          <img src={logo} alt="Ease by Azeez Logo" className="sidebar-logo" />
           <h2 className="sidebar-title">Admin Panel</h2>
         </div>
 
@@ -47,9 +41,9 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => window.innerWidth <= 768 && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
-            📊 Dashboard
+            Dashboard
           </NavLink>
 
           <NavLink
@@ -57,9 +51,9 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => window.innerWidth <= 768 && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
-            📚 Manage Books
+            Manage Books
           </NavLink>
 
           <NavLink
@@ -67,9 +61,9 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => window.innerWidth <= 768 && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
-            🎁 Manage Donations
+            Manage Donations
           </NavLink>
 
           <NavLink
@@ -77,9 +71,9 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => window.innerWidth <= 768 && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
-            🔄 Borrow Requests
+            Borrow Requests
           </NavLink>
 
           <NavLink
@@ -87,9 +81,9 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => window.innerWidth <= 768 && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
-            👥 Users & Settings
+            Users & Settings
           </NavLink>
         </nav>
 
@@ -98,10 +92,8 @@ const AdminSidebar = () => {
         </div>
       </aside>
 
-      {/* Overlay for mobile */}
-      {isOpen && window.innerWidth <= 768 && (
-        <div className="sidebar-overlay" onClick={toggleSidebar}></div>
-      )}
+      {/* Dim overlay */}
+      {isOpen && <div className="sidebar-overlay" onClick={toggleSidebar}></div>}
     </>
   );
 };

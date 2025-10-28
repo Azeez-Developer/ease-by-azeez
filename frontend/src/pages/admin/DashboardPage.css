@@ -1,88 +1,83 @@
 /* src/pages/admin/DashboardPage.css */
 
-/* ========== Layout wrapper ========== */
+/* ===== Layout Wrapper ===== */
 .admin-layout {
   display: flex;
   min-height: 100vh;
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
-  transition: margin-left 0.3s ease-in-out;
 }
 
-/* ========== Main content beside sidebar ========== */
+/* ===== Main Content (right side of sidebar) ===== */
 .admin-content {
   flex: 1;
-  padding: 60px 40px;
   overflow-y: auto;
-  transition: margin-left 0.3s ease-in-out;
-  margin-left: 250px; /* matches sidebar width */
+  margin-left: 250px;
+  padding: 100px 20px 80px; /* matches DonatePage padding */
   text-align: center;
+  transition: margin-left 0.3s ease-in-out;
 }
 
-/* Adjust content shift for smaller sidebars */
+/* Adjust margin when sidebar collapses */
 @media (max-width: 992px) {
   .admin-content {
     margin-left: 220px;
   }
 }
 
-/* Sidebar hidden on mobile */
 @media (max-width: 768px) {
   .admin-content {
     margin-left: 0;
-    padding: 40px 20px;
+    padding: 80px 20px;
   }
 }
 
-/* ========== Logo and Header ========== */
-.admin-logo {
-  width: 130px;
-  margin: 0 auto 15px auto;
-  display: block;
+/* ===== Dashboard Section ===== */
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
 }
 
+/* ===== Title & Subtitle ===== */
 .dashboard-title {
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #222;
-  margin-bottom: 10px;
-  text-align: center;
+  margin-bottom: 15px;
 }
 
 .dashboard-subtext {
   font-size: 1.1rem;
   color: #555;
+  margin-bottom: 40px;
   max-width: 600px;
-  margin: 0 auto 40px;
-  text-align: center;
 }
 
-/* ========== Dashboard Cards Grid ========== */
+/* ===== Dashboard Cards Grid ===== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
-  justify-items: center;
-  align-items: stretch;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  justify-items: center;
 }
 
-/* ========== Individual Cards ========== */
+/* ===== Individual Cards ===== */
 .dashboard-card {
-  background: #ffffff;
+  background-color: #ffffff;
   border: 1px solid #dee2e6;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   text-align: center;
-
-  /* Make all cards equal height */
   min-height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -102,10 +97,10 @@
   font-size: 0.95rem;
   color: #666;
   margin-bottom: 15px;
-  flex-grow: 1; /* balances height for text */
+  flex-grow: 1;
 }
 
-/* Buttons inside cards */
+/* ===== Buttons inside cards ===== */
 .btn-primary {
   background-color: #007bff;
   color: #fff;
@@ -120,10 +115,10 @@
   background-color: #0056b3;
 }
 
-/* ========== Responsive Stacking for Mobile ========== */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 1fr; /* single column */
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
@@ -153,9 +148,4 @@
   .dashboard-card {
     min-height: 210px;
   }
-}
-
-/* ========== Optional: Smooth shift when sidebar closes ========== */
-body.sidebar-closed .admin-content {
-  margin-left: 0;
 }

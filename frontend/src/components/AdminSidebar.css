@@ -1,58 +1,39 @@
-/* src/components/AdminSidebar.css */
-
-/* Sidebar container */
+/* ===== Sidebar Container ===== */
 .admin-sidebar {
   width: 250px;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
-  height: calc(100vh - 70px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
-  top: 70px;
+  top: 0;
   left: 0;
   padding: 20px 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   z-index: 999;
+  transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
-  transform: translateX(0); /* open by default */
 }
 
 .admin-sidebar.open {
   transform: translateX(0);
 }
 
-/* Sidebar hidden state (used on mobile) */
-@media (max-width: 768px) {
-  .admin-sidebar {
-    transform: translateX(-100%);
-  }
-
-  .admin-sidebar.open {
-    transform: translateX(0);
-  }
-}
-
-/* Sidebar header */
+/* ===== Sidebar Header ===== */
 .sidebar-header {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-.sidebar-logo {
-  width: 80px;
-  height: auto;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .sidebar-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
 }
 
-/* Navigation links */
+/* ===== Sidebar Nav Links ===== */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -83,7 +64,7 @@
   font-weight: 600;
 }
 
-/* Footer */
+/* ===== Sidebar Footer ===== */
 .sidebar-footer {
   font-size: 0.85rem;
   color: #777;
@@ -94,16 +75,15 @@
   width: 100%;
 }
 
-/* Sidebar toggle (hamburger button) */
+/* ===== Hamburger Button ===== */
 .sidebar-toggle {
-  display: none;
   position: fixed;
-  top: 75px;
+  top: 95px; /* placed just below navbar */
   left: 15px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   border-radius: 6px;
   padding: 6px 12px;
   cursor: pointer;
@@ -115,17 +95,10 @@
   background-color: #0056b3;
 }
 
-/* Show toggle on small screens */
-@media (max-width: 768px) {
-  .sidebar-toggle {
-    display: block;
-  }
-}
-
-/* Overlay when sidebar is open (mobile only) */
+/* ===== Overlay (Dim Background) ===== */
 .sidebar-overlay {
   position: fixed;
-  top: 70px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -134,7 +107,6 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -144,19 +116,13 @@
   }
 }
 
-/* Tablet adjustments */
+/* ===== Responsive Adjustments ===== */
 @media (max-width: 992px) {
   .admin-sidebar {
     width: 220px;
   }
-
   .sidebar-link {
     font-size: 0.95rem;
     padding: 10px 12px;
   }
-}
-
-/* When sidebar is closed, shift content left */
-body.sidebar-closed .admin-content {
-  margin-left: 0;
 }

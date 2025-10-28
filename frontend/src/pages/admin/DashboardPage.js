@@ -3,15 +3,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import "./DashboardPage.css";
-import logo from "../../assets/ease-logo.png";
 
 const DashboardPage = () => {
   return (
     <div className="admin-layout">
       <AdminSidebar />
       <div className="admin-content">
-        <div className="dashboard-center">
-          <img src={logo} alt="Ease by Azeez Logo" className="admin-logo" />
+        <section className="dashboard-section text-center">
           <h1 className="dashboard-title">Admin Dashboard</h1>
           <p className="dashboard-subtext">
             Manage all books, donations, borrowers, and system settings from one place.
@@ -42,7 +40,7 @@ const DashboardPage = () => {
               <Link to="/admin/users" className="btn btn-primary">Go to Users</Link>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
