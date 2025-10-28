@@ -10,7 +10,7 @@ const BooksPage = () => {
         Browse through the collection of free books you can borrow.
       </p>
       <div className="books-placeholder">
-        <p className="coming-soon">🚧 Book list coming soon...</p>
+        <p className="coming-soon"> Book list coming soon...</p>
       </div>
     </div>
   );
