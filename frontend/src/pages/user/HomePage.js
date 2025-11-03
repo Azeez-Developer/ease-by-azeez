@@ -1,6 +1,6 @@
-// src/pages/user/HomePage.js
 import React from 'react';
 import './HomePage.css';
+import logo from '../../assets/ease-logo.png';
 
 const HomePage = () => {
   return (
@@ -8,6 +8,9 @@ const HomePage = () => {
       {/* === Hero Section === */}
       <section className="hero-section">
         <h1 className="hero-title">Welcome to Ease by Azeez</h1>
+
+        {/* === Logo under title === */}
+        <img src={logo} alt="Ease by Azeez Logo" className="hero-logo" />
 
         {/* === About / Intro Text === */}
         <div className="about-text">

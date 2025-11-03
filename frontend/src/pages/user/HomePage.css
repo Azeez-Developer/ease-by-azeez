@@ -18,30 +18,42 @@
 
 /* === Title === */
 .hero-title {
-  font-size: 2.5rem; /* consistent with DonatePage and other user pages */
+  font-size: 2.5rem; /* consistent with other pages */
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px; /* tightened for compact look */
   color: #1e1e1e;
 }
 
+/* === Logo under title === */
+.hero-logo {
+  width: 160px;
+  height: auto;
+  margin-top: 10px;    /* smaller gap between title and logo */
+  margin-bottom: 15px; /* smaller gap between logo and text */
+  transition: transform 0.3s ease;
+}
+
+.hero-logo:hover {
+  transform: scale(1.05);
+}
 
 /* === About / Intro Text === */
 .about-text {
   color: #333;
-  font-size: 1.35rem; /* slightly larger for better readability */
-  line-height: 1.9;
-  margin-bottom: 40px;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: 35px;
 }
 
 .about-text p {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 /* === Tagline === */
 .hero-subtext {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: #444;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -70,7 +82,13 @@
 /* === Responsive Design === */
 @media (max-width: 992px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
+  }
+
+  .hero-logo {
+    width: 140px;
+    margin-top: 8px;
+    margin-bottom: 12px;
   }
 
   .about-text {
@@ -78,13 +96,19 @@
   }
 
   .hero-subtext {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
+  }
+
+  .hero-logo {
+    width: 130px;
+    margin-top: 8px;
+    margin-bottom: 10px;
   }
 
   .about-text {
@@ -110,7 +134,13 @@
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.9rem;
+  }
+
+  .hero-logo {
+    width: 110px;
+    margin-top: 6px;
+    margin-bottom: 8px;
   }
 
   .about-text {
