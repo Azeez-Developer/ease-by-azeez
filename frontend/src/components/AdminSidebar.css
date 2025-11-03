@@ -21,7 +21,6 @@
   transform: translateX(0);
 }
 
-
 /* ===== Sidebar Nav Links ===== */
 .sidebar-nav {
   display: flex;
@@ -76,7 +75,7 @@
   border-radius: 6px;
   padding: 6px 12px;
   cursor: pointer;
-  z-index: 1201; /* always on top */
+  z-index: 1000; /* lowered to prevent overlap with navbar dropdown */
   transition: background 0.2s ease-in-out;
 }
 
