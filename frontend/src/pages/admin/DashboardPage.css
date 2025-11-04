@@ -1,33 +1,35 @@
-/* src/pages/admin/DashboardPage.css */
-
 /* ===== Layout Wrapper ===== */
 .admin-layout {
   display: flex;
   min-height: 100vh;
   background: linear-gradient(to bottom right, #f5f7fa, #e4ecf7);
+  transition: all 0.3s ease;
 }
 
 /* ===== Main Content ===== */
 .admin-content {
   flex: 1;
   overflow-y: auto;
-  margin-left: 250px;
-  padding: 100px 20px 80px;
+  padding: 140px 20px 80px; /* ✅ top padding consistent with other admin pages */
   text-align: center;
-  transition: margin-left 0.3s ease-in-out;
+  transition: margin-left 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Sidebar adjustments */
+/* When sidebar is open, push content */
+.admin-layout.sidebar-open .admin-content {
+  margin-left: 250px;
+}
+
+/* Responsive sidebar spacing */
 @media (max-width: 992px) {
-  .admin-content {
+  .admin-layout.sidebar-open .admin-content {
     margin-left: 220px;
   }
 }
 
 @media (max-width: 768px) {
-  .admin-content {
+  .admin-layout.sidebar-open .admin-content {
     margin-left: 0;
-    padding: 80px 20px;
   }
 }
 
@@ -36,14 +38,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
+  margin-top: 0;
+  padding-top: 0;
 }
 
-/* ===== Title & Subtitle ===== */
+/* ===== Dashboard Title & Subtext ===== */
 .dashboard-title {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #222;
+  margin-top: 0; /* ✅ no extra top gap */
   margin-bottom: 15px;
 }
 
@@ -65,9 +71,9 @@
   justify-items: center;
 }
 
-/* ===== Cards ===== */
+/* ===== Dashboard Cards ===== */
 .dashboard-card {
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 12px;
   padding: 30px;
@@ -87,21 +93,7 @@
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-card h3 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.dashboard-card p {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 15px;
-  flex-grow: 1;
-}
-
-/* ===== Buttons inside cards ===== */
+/* ===== Button Style ===== */
 .btn-primary {
   background-color: #007bff;
   color: #fff;
@@ -109,7 +101,6 @@
   text-decoration: none;
   padding: 10px 20px;
   font-size: 1rem;
-  display: inline-block;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -118,55 +109,23 @@
   transform: translateY(-2px);
 }
 
-/* ===== Tablet (iPad Air) ===== */
-@media (min-width: 769px) and (max-width: 1199px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-
-  .dashboard-card {
-    min-height: 240px;
-  }
-
-  .btn-primary {
-    padding: 10px 22px;
-    font-size: 1rem;
-  }
-}
-
-/* ===== Mobile ===== */
+/* ===== Responsive Adjustments ===== */
 @media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .dashboard-card {
-    width: 100%;
-    min-height: 220px;
+  .admin-content {
+    padding: 120px 15px 60px; /* slightly smaller padding for smaller screens */
   }
 
   .dashboard-title {
     font-size: 2rem;
   }
 
-  .dashboard-card h3 {
-    font-size: 1.2rem;
-  }
-}
-
-/* ===== Small Phones ===== */
-@media (max-width: 480px) {
-  .dashboard-title {
-    font-size: 1.8rem;
-  }
-
-  .dashboard-subtext {
-    font-size: 1rem;
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .dashboard-card {
+    max-width: 100%;
     min-height: 210px;
   }
 }

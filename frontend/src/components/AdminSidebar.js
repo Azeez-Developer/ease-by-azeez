@@ -5,16 +5,27 @@ import "./AdminSidebar.css";
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleSidebar = () => {
+    setIsOpen((prev) => !prev);
+    document
+      .querySelector(".admin-layout")
+      ?.classList.toggle("sidebar-open", !isOpen);
+  };
 
-  // Close sidebar on resize if necessary
+  // ✅ Close sidebar & remove "sidebar-open" class on resize or unmount
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768 && isOpen) setIsOpen(false);
+      if (window.innerWidth > 768) {
+        setIsOpen(false);
+        document.querySelector(".admin-layout")?.classList.remove("sidebar-open");
+      }
     };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isOpen]);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.querySelector(".admin-layout")?.classList.remove("sidebar-open");
+    };
+  }, []);
 
   return (
     <>
@@ -35,7 +46,7 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => setIsOpen(false)}
+            onClick={toggleSidebar}
           >
             Dashboard
           </NavLink>
@@ -45,7 +56,7 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => setIsOpen(false)}
+            onClick={toggleSidebar}
           >
             Manage Books
           </NavLink>
@@ -55,7 +66,7 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => setIsOpen(false)}
+            onClick={toggleSidebar}
           >
             Manage Donations
           </NavLink>
@@ -65,7 +76,7 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => setIsOpen(false)}
+            onClick={toggleSidebar}
           >
             Borrow Requests
           </NavLink>
@@ -75,7 +86,7 @@ const AdminSidebar = () => {
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
-            onClick={() => setIsOpen(false)}
+            onClick={toggleSidebar}
           >
             Users & Settings
           </NavLink>
@@ -86,8 +97,10 @@ const AdminSidebar = () => {
         </div>
       </aside>
 
-      {/* Dim overlay */}
-      {isOpen && <div className="sidebar-overlay" onClick={toggleSidebar}></div>}
+      {/* Dim overlay (closes sidebar on click) */}
+      {isOpen && (
+        <div className="sidebar-overlay" onClick={toggleSidebar}></div>
+      )}
     </>
   );
 };
