@@ -1,6 +1,7 @@
-// src/pages/user/RegisterPage.js
 import React, { useState } from 'react';
 import './RegisterPage.css';
+import api from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -8,8 +9,10 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword) {
@@ -22,8 +25,34 @@ const RegisterPage = () => {
       return;
     }
 
-    setError('');
-    console.log('Register submitted:', { name, email, password });
+    if (!email.toLowerCase().endsWith('.edu')) {
+      setError('Only .edu email addresses are allowed for registration.');
+      return;
+    }
+
+    try {
+      setError('');
+      setSuccess('');
+
+      const response = await api.post('/auth/register', {
+        name,
+        email,
+        password,
+      });
+
+      console.log('✅ Registration successful:', response.data);
+
+      setSuccess('Registration successful! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000);
+
+    } catch (err) {
+      console.error('❌ Registration error:', err);
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        'Registration failed. Please try again.';
+      setError(message);
+    }
   };
 
   return (
@@ -47,10 +76,10 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Email</label>
+            <label>Email (.edu only)</label>
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your college email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -80,6 +109,7 @@ const RegisterPage = () => {
           </div>
 
           {error && <p className="error-text">{error}</p>}
+          {success && <p className="success-text">{success}</p>}
 
           <button type="submit" className="btn-register">Register</button>
         </form>
