@@ -69,6 +69,18 @@ io.on('connection', (socket) => {
   });
 });
 
+// ===============================
+// 🧩 PostgreSQL Connection Test (Temporary for Day 1)
+// ===============================
+pool.query('SELECT NOW()', (err, result) => {
+  if (err) {
+    console.error('❌ Database connection failed:', err);
+  } else {
+    console.log('✅ Connected to PostgreSQL at:', result.rows[0].now);
+  }
+});
+
+
 // Start the HTTP server (not app.listen)
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
