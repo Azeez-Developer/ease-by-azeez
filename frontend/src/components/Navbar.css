@@ -1,27 +1,47 @@
-/* Navbar brand style */
+/* Navbar brand */
 .navbar-brand {
   font-weight: 700;
   font-size: 1.4rem;
   color: #212529 !important;
 }
 
-/* Navbar link base style */
-.navbar-nav .nav-link {
+/* Navbar links (Login, Books, etc.) */
+.navbar-nav .nav-link,
+.logout-btn {
   padding: 0.5rem 1.25rem;
-  font-weight: 700;         /* Bold to match brand */
-  font-size: 1.4rem;        /* Match navbar-brand font size */
+  font-weight: 700;
+  font-size: 1.4rem;
   color: #343a40;
+  background: none;
+  border: none;
   transition: color 0.3s ease;
 }
 
-/* Navbar link hover style */
-.navbar-nav .nav-link:hover {
+/* Hover & Active styles */
+.navbar-nav .nav-link:hover,
+.logout-btn:hover {
   color: #0d6efd;
+  cursor: pointer;
 }
 
-/* Active link style (if using react-router-dom) */
 .navbar-nav .nav-link.active {
   font-weight: 700;
   border-bottom: 2px solid #0d6efd;
   color: #0d6efd;
+}
+
+/* Remove dividers or borders */
+.navbar-nav .nav-link,
+.logout-btn {
+  border: none;
+  background: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .navbar-nav .nav-link,
+  .logout-btn {
+    text-align: center;
+    width: 100%;
+  }
 }

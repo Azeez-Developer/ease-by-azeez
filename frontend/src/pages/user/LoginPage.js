@@ -30,11 +30,8 @@ const LoginPage = () => {
       console.log('✅ Login successful:', response.data);
 
       // Redirect user based on role
-      if (response.data.user.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/books');
-      }
+      navigate('/');
+
 
     } catch (err) {
       console.error('❌ Login error:', err);
