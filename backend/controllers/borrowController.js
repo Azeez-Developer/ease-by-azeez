@@ -1,6 +1,6 @@
 const pool = require('../models/db');
 
-// 📚 Borrow a book
+// 📚 Borrow a book (user)
 exports.borrowBook = async (req, res) => {
   const { book_id } = req.body;
   const user_id = req.user.userId;
@@ -12,7 +12,6 @@ exports.borrowBook = async (req, res) => {
       'SELECT * FROM books WHERE id = $1 AND status = $2',
       [book_id, 'available']
     );
-
     if (bookCheck.rows.length === 0) {
       return res.status(400).json({ message: 'Book is not available or does not exist' });
     }
@@ -33,19 +32,34 @@ exports.borrowBook = async (req, res) => {
   }
 };
 
-// 🔁 Return a book
+// 🔁 Return a book (admin can return ANY, user can return OWN)
 exports.returnBook = async (req, res) => {
   const user_id = req.user.userId;
+  const user_role = req.user.role;
   const book_id = req.params.book_id;
 
   try {
-    const result = await pool.query(
-      `UPDATE borrows
-       SET returned_at = CURRENT_TIMESTAMP
-       WHERE user_id = $1 AND book_id = $2 AND returned_at IS NULL
-       RETURNING *`,
-      [user_id, book_id]
-    );
+    let result;
+
+    if (user_role === 'admin') {
+      // Admin: return regardless of who borrowed it
+      result = await pool.query(
+        `UPDATE borrows
+         SET returned_at = CURRENT_TIMESTAMP
+         WHERE book_id = $1 AND returned_at IS NULL
+         RETURNING *`,
+        [book_id]
+      );
+    } else {
+      // Regular user: only return their own
+      result = await pool.query(
+        `UPDATE borrows
+         SET returned_at = CURRENT_TIMESTAMP
+         WHERE user_id = $1 AND book_id = $2 AND returned_at IS NULL
+         RETURNING *`,
+        [user_id, book_id]
+      );
+    }
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'No active borrow record found for this book' });
@@ -53,12 +67,13 @@ exports.returnBook = async (req, res) => {
 
     await pool.query(`UPDATE books SET status = 'available' WHERE id = $1`, [book_id]);
 
-    // 🔄 Emit real-time event using Socket.IO
     const io = req.app.get('io');
-    io.emit('bookReturned', {
-      book_id,
-      message: 'A book has been returned and is now available!'
-    });
+    if (io) {
+      io.emit('bookReturned', {
+        book_id,
+        message: 'A book has been returned and is now available!'
+      });
+    }
 
     res.json({ message: 'Book returned successfully', borrow: result.rows[0] });
   } catch (err) {
@@ -73,7 +88,7 @@ exports.getMyBorrows = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at, br.returned_at
+      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at, br.returned_at, br.book_id
        FROM borrows br
        JOIN books bk ON br.book_id = bk.id
        WHERE br.user_id = $1
@@ -94,7 +109,7 @@ exports.getCurrentBorrows = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at
+      `SELECT br.id AS borrow_id, bk.title, bk.author, br.due_date, br.borrowed_at, br.book_id
        FROM borrows br
        JOIN books bk ON br.book_id = bk.id
        WHERE br.user_id = $1 AND br.returned_at IS NULL

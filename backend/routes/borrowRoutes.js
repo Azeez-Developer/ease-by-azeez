@@ -7,25 +7,25 @@ const {
   getMyBorrows,
   getCurrentBorrows,
   updateDueDate,
-  getAllBorrows, // ✅ new controller function
+  getAllBorrows,
 } = require('../controllers/borrowController');
 
 // 📚 Borrow a book
 router.post('/', authenticateToken, borrowBook);
 
-// 🔁 Return a book
+// 🔁 Return a book (admin can return any; users return their own)
 router.put('/return/:book_id', authenticateToken, returnBook);
 
-// 📋 Get all books borrowed by logged-in user
+// 📋 Logged-in user's borrows
 router.get('/my-borrows', authenticateToken, getMyBorrows);
 
-// 📌 Get currently borrowed books
+// 📌 Logged-in user's active borrows
 router.get('/current', authenticateToken, getCurrentBorrows);
 
-// 🧾 Admin: Get all borrow records
+// 🧾 Admin: all borrow records
 router.get('/all', authenticateToken, getAllBorrows);
 
-// ✏️ Update due date
+// ✏️ Update due date (for the logged-in user’s active borrow)
 router.put('/update-due/:book_id', authenticateToken, updateDueDate);
 
 module.exports = router;
