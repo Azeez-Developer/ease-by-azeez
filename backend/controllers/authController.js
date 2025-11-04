@@ -2,13 +2,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../models/db');
 
-// =============== REGISTER ===============
+// ====================== REGISTER ======================
 exports.registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   // Restrict registration to .edu email addresses
   if (!email.toLowerCase().endsWith('.edu')) {
-    return res.status(400).json({ message: 'Only .edu email addresses are allowed for registration.' });
+    return res.status(400).json({
+      message: 'Only .edu email addresses are allowed for registration.',
+    });
   }
 
   try {
@@ -33,7 +35,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// =============== LOGIN ===============
+// ====================== LOGIN ======================
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -70,7 +72,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// =============== UPDATE PROFILE ===============
+// ====================== UPDATE PROFILE ======================
 exports.updateProfile = async (req, res) => {
   const { name, email, password } = req.body;
   const userId = req.user.userId;
@@ -84,7 +86,9 @@ exports.updateProfile = async (req, res) => {
     const user = result.rows[0];
     const updatedName = name ?? user.name;
     const updatedEmail = email ?? user.email;
-    const updatedPassword = password ? await bcrypt.hash(password, 10) : user.password;
+    const updatedPassword = password
+      ? await bcrypt.hash(password, 10)
+      : user.password;
 
     await pool.query(
       `UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4`,
@@ -95,5 +99,85 @@ exports.updateProfile = async (req, res) => {
   } catch (err) {
     console.error('Profile update error:', err);
     res.status(500).json({ message: 'Server error while updating profile.' });
+  }
+};
+
+// ====================== ADMIN ENDPOINTS ======================
+
+// Get all users (admin only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied. Admins only.' });
+    }
+
+    const result = await pool.query(
+      'SELECT id, name, email, role FROM users ORDER BY id ASC'
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error('❌ Error fetching users:', err);
+    res.status(500).json({ message: 'Failed to fetch users.' });
+  }
+};
+
+// Update user role (admin only)
+exports.updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Admins only.' });
+  }
+
+  if (!['user', 'admin'].includes(role)) {
+    return res.status(400).json({ message: 'Invalid role provided.' });
+  }
+
+  try {
+    const result = await pool.query(
+      'UPDATE users SET role = $1 WHERE id = $2 RETURNING id, name, email, role',
+      [role, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.json({
+      message: `User role updated to ${role}.`,
+      user: result.rows[0],
+    });
+  } catch (err) {
+    console.error('❌ Error updating user role:', err);
+    res.status(500).json({ message: 'Failed to update user role.' });
+  }
+};
+
+// Delete user (admin only)
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Admins only.' });
+  }
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM users WHERE id = $1 RETURNING id, name, email, role',
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.json({
+      message: 'User deleted successfully.',
+      deletedUser: result.rows[0],
+    });
+  } catch (err) {
+    console.error('❌ Error deleting user:', err);
+    res.status(500).json({ message: 'Failed to delete user.' });
   }
 };
