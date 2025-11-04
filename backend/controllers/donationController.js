@@ -59,12 +59,12 @@ exports.updateDonationStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  if (user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Admins only.' });
+  if (user.role !== "admin") {
+    return res.status(403).json({ message: "Access denied. Admins only." });
   }
 
-  if (!['approved', 'rejected'].includes(status?.toLowerCase())) {
-    return res.status(400).json({ message: 'Status must be either approved or rejected.' });
+  if (!["approved", "rejected"].includes(status?.toLowerCase())) {
+    return res.status(400).json({ message: "Status must be either approved or rejected." });
   }
 
   try {
@@ -74,15 +74,27 @@ exports.updateDonationStatus = async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Donation not found' });
+      return res.status(404).json({ message: "Donation not found" });
+    }
+
+    const donation = result.rows[0];
+
+    // ✅ If approved, insert into books table
+    if (status.toLowerCase() === "approved") {
+      await pool.query(
+        `INSERT INTO books (title, author, genre, status)
+         VALUES ($1, $2, $3, 'available')`,
+        [donation.title, donation.author, donation.genre]
+      );
     }
 
     res.json({
       message: `Donation ${status} successfully`,
-      donation: result.rows[0]
+      donation,
     });
   } catch (err) {
-    console.error('Error updating donation status:', err);
-    res.status(500).json({ message: 'Failed to update donation' });
+    console.error("Error updating donation status:", err);
+    res.status(500).json({ message: "Failed to update donation" });
   }
 };
+

@@ -13,6 +13,7 @@ const ManageBooksPage = () => {
   // Fetch all books
   const fetchBooks = async () => {
     try {
+      setLoading(true);
       const response = await api.get("/books");
       setBooks(response.data);
       setError("");
@@ -28,35 +29,49 @@ const ManageBooksPage = () => {
     fetchBooks();
   }, []);
 
-  // Add a new book
+  // Add new book (admin only)
   const handleAddBook = async (e) => {
     e.preventDefault();
+
     if (!newBook.title || !newBook.author || !newBook.genre) {
       setError("Please fill in all book fields.");
       return;
     }
 
     try {
+      // ✅ attach admin token automatically via interceptor in api.js
       const response = await api.post("/books", newBook);
       console.log("✅ Book added:", response.data);
       setSuccess("Book added successfully!");
+      setError("");
       setNewBook({ title: "", author: "", genre: "" });
       fetchBooks();
     } catch (err) {
       console.error("❌ Error adding book:", err);
-      setError("Failed to add book.");
+      const msg =
+        err.response?.data?.message ||
+        "Failed to add book. (Admin access required)";
+      setError(msg);
+      setSuccess("");
     }
   };
 
-  // Delete book
+  // Delete book (admin only)
   const handleDelete = async (bookId) => {
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+
     try {
       await api.delete(`/books/${bookId}`);
       setSuccess("Book deleted successfully!");
+      setError("");
       fetchBooks();
     } catch (err) {
       console.error("❌ Error deleting book:", err);
-      setError("Failed to delete book.");
+      const msg =
+        err.response?.data?.message ||
+        "Failed to delete book. (Admin access required)";
+      setError(msg);
+      setSuccess("");
     }
   };
 
@@ -101,7 +116,9 @@ const ManageBooksPage = () => {
                 }
                 required
               />
-              <button type="submit" className="btn-add">Add Book</button>
+              <button type="submit" className="btn-add">
+                Add Book
+              </button>
             </form>
           </div>
 
@@ -138,7 +155,9 @@ const ManageBooksPage = () => {
                       <td>
                         <span
                           className={`status ${
-                            book.status === "borrowed" ? "borrowed" : "available"
+                            book.status === "borrowed"
+                              ? "borrowed"
+                              : "available"
                           }`}
                         >
                           {book.status}

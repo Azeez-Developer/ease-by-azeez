@@ -9,15 +9,15 @@ const UsersSettingsPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Fetch all users
+  // ✅ Fetch all users (admin only)
   const fetchUsers = async () => {
     try {
-      const response = await api.get("/auth/users"); // you'll create this endpoint later
+      const response = await api.get("/auth/users");
       setUsers(response.data);
       setError("");
     } catch (err) {
       console.error("❌ Error fetching users:", err);
-      setError("Failed to load users.");
+      setError("Failed to load users. Admin access required.");
     } finally {
       setLoading(false);
     }
@@ -27,23 +27,33 @@ const UsersSettingsPage = () => {
     fetchUsers();
   }, []);
 
-  // Change user role
-  const handleRoleChange = async (userId, role) => {
+  // ✅ Change user role (admin only)
+  const handleRoleChange = async (userId, newRole) => {
+    const confirmChange = window.confirm(
+      `Are you sure you want to change this user's role to ${newRole}?`
+    );
+    if (!confirmChange) return;
+
     try {
-      await api.put(`/auth/users/${userId}/role`, { role });
-      setSuccess(`User role updated to ${role}`);
+      await api.put(`/auth/users/${userId}/role`, { role: newRole });
+      setSuccess(`User role updated to ${newRole}.`);
+      setError("");
       fetchUsers();
     } catch (err) {
-      console.error("❌ Error updating role:", err);
+      console.error("❌ Error updating user role:", err);
       setError("Failed to update user role.");
     }
   };
 
-  // Delete user
+  // ✅ Delete user (admin only)
   const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmDelete) return;
+
     try {
       await api.delete(`/auth/users/${userId}`);
       setSuccess("User deleted successfully!");
+      setError("");
       fetchUsers();
     } catch (err) {
       console.error("❌ Error deleting user:", err);
@@ -93,7 +103,9 @@ const UsersSettingsPage = () => {
                       <td>{user.email}</td>
                       <td>
                         <span
-                          className={`role ${user.role === "admin" ? "admin" : "user"}`}
+                          className={`role-tag ${
+                            user.role === "admin" ? "admin-role" : "user-role"
+                          }`}
                         >
                           {user.role}
                         </span>
@@ -104,14 +116,14 @@ const UsersSettingsPage = () => {
                             className="btn-promote"
                             onClick={() => handleRoleChange(user.id, "admin")}
                           >
-                            Make Admin
+                            Promote to Admin
                           </button>
                         ) : (
                           <button
                             className="btn-demote"
                             onClick={() => handleRoleChange(user.id, "user")}
                           >
-                            Demote
+                            Demote to User
                           </button>
                         )}
                         <button

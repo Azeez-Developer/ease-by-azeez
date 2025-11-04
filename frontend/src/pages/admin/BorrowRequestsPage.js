@@ -9,14 +9,19 @@ const BorrowRequestsPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Fetch all borrow requests
+  // Fetch all borrow records (admin only)
   const fetchBorrows = async () => {
     try {
-      const response = await api.get("/borrow/my-borrows");
+      setLoading(true);
+      const response = await api.get("/borrow/all"); // ✅ new admin endpoint
       setBorrows(response.data);
+      setError("");
     } catch (err) {
       console.error("❌ Error fetching borrow requests:", err);
-      setError("Failed to load borrow requests.");
+      const msg =
+        err.response?.data?.message ||
+        "Failed to load borrow requests. (Admin access required)";
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -26,17 +31,23 @@ const BorrowRequestsPage = () => {
     fetchBorrows();
   }, []);
 
-  // Handle return book
+  // Handle return (mark as returned)
   const handleReturn = async (bookId) => {
+    if (!window.confirm("Mark this book as returned?")) return;
+
     try {
       const response = await api.put(`/borrow/return/${bookId}`);
       console.log("✅ Book returned:", response.data);
       setSuccess("Book marked as returned successfully!");
       setError("");
-      fetchBorrows();
+      fetchBorrows(); // refresh
     } catch (err) {
       console.error("❌ Error returning book:", err);
-      setError("Failed to mark book as returned.");
+      const msg =
+        err.response?.data?.message ||
+        "Failed to mark book as returned. (Admin access required)";
+      setError(msg);
+      setSuccess("");
     }
   };
 
@@ -84,9 +95,17 @@ const BorrowRequestsPage = () => {
                     <tr key={borrow.borrow_id}>
                       <td>{borrow.title}</td>
                       <td>{borrow.author}</td>
-                      <td>{borrow.user_name || "N/A"}</td>
-                      <td>{new Date(borrow.borrowed_at).toLocaleDateString()}</td>
-                      <td>{new Date(borrow.due_date).toLocaleDateString()}</td>
+                      <td>{borrow.user_name || borrow.user_email || "N/A"}</td>
+                      <td>
+                        {borrow.borrowed_at
+                          ? new Date(borrow.borrowed_at).toLocaleDateString()
+                          : "—"}
+                      </td>
+                      <td>
+                        {borrow.due_date
+                          ? new Date(borrow.due_date).toLocaleDateString()
+                          : "—"}
+                      </td>
                       <td>
                         {borrow.returned_at ? (
                           <span className="status returned">Returned</span>

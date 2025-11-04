@@ -12,12 +12,16 @@ const ManageDonationsPage = () => {
   // Fetch all donations (admin only)
   const fetchDonations = async () => {
     try {
-      const response = await api.get("/donations");
+      setLoading(true);
+      const response = await api.get("/donations"); // JWT auto-injected via interceptor
       setDonations(response.data);
       setError("");
     } catch (err) {
       console.error("❌ Error fetching donations:", err);
-      setError("Failed to load donations.");
+      const msg =
+        err.response?.data?.message ||
+        "Failed to load donations. (Admin access required)";
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -37,7 +41,11 @@ const ManageDonationsPage = () => {
       fetchDonations(); // refresh list
     } catch (err) {
       console.error(`❌ Error updating donation:`, err);
-      setError(`Failed to ${status} donation.`);
+      const msg =
+        err.response?.data?.message ||
+        `Failed to ${status} donation. (Admin access required)`;
+      setError(msg);
+      setSuccess("");
     }
   };
 

@@ -24,10 +24,7 @@ exports.borrowBook = async (req, res) => {
       [user_id, book_id, due_date]
     );
 
-    await pool.query(
-      `UPDATE books SET status = 'borrowed' WHERE id = $1`,
-      [book_id]
-    );
+    await pool.query(`UPDATE books SET status = 'borrowed' WHERE id = $1`, [book_id]);
 
     res.status(201).json(borrow.rows[0]);
   } catch (err) {
@@ -54,10 +51,7 @@ exports.returnBook = async (req, res) => {
       return res.status(404).json({ message: 'No active borrow record found for this book' });
     }
 
-    await pool.query(
-      `UPDATE books SET status = 'available' WHERE id = $1`,
-      [book_id]
-    );
+    await pool.query(`UPDATE books SET status = 'available' WHERE id = $1`, [book_id]);
 
     // 🔄 Emit real-time event using Socket.IO
     const io = req.app.get('io');
@@ -138,5 +132,35 @@ exports.updateDueDate = async (req, res) => {
   } catch (err) {
     console.error('Error updating due date:', err);
     res.status(500).json({ message: 'Failed to update due date' });
+  }
+};
+
+// 🧾 Get all borrow records (Admin only)
+exports.getAllBorrows = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied. Admins only.' });
+    }
+
+    const result = await pool.query(`
+      SELECT br.id AS borrow_id,
+             bk.title,
+             bk.author,
+             u.name AS user_name,
+             u.email AS user_email,
+             br.borrowed_at,
+             br.due_date,
+             br.returned_at,
+             br.book_id
+      FROM borrows br
+      JOIN books bk ON br.book_id = bk.id
+      JOIN users u ON br.user_id = u.id
+      ORDER BY br.borrowed_at DESC
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching all borrows:', err);
+    res.status(500).json({ message: 'Failed to fetch borrow records' });
   }
 };
