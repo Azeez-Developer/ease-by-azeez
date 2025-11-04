@@ -51,7 +51,7 @@ const DonatePage = () => {
 
   return (
     <div className="donate-section text-center">
-      <h1 className="donate-title">Donate a Book 📚</h1>
+      <h1 className="donate-title">Donate a Book</h1>
       <p className="donate-subtext">
         Give your books a second life by donating them to fellow students.
       </p>
