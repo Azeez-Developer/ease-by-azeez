@@ -9,7 +9,7 @@ const UsersSettingsPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // ✅ Fetch all users (admin only)
+  // Fetch users
   const fetchUsers = async () => {
     try {
       const response = await api.get("/auth/users");
@@ -27,7 +27,7 @@ const UsersSettingsPage = () => {
     fetchUsers();
   }, []);
 
-  // ✅ Change user role (admin only)
+  // Update role
   const handleRoleChange = async (userId, newRole) => {
     const confirmChange = window.confirm(
       `Are you sure you want to change this user's role to ${newRole}?`
@@ -45,7 +45,7 @@ const UsersSettingsPage = () => {
     }
   };
 
-  // ✅ Delete user (admin only)
+  // Delete user
   const handleDeleteUser = async (userId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
     if (!confirmDelete) return;
@@ -72,17 +72,11 @@ const UsersSettingsPage = () => {
           </p>
 
           {loading ? (
-            <div className="admin-placeholder">
-              <p>Loading users...</p>
-            </div>
+            <div className="admin-placeholder"><p>Loading users...</p></div>
           ) : error ? (
-            <div className="admin-placeholder">
-              <p className="error-text">{error}</p>
-            </div>
+            <div className="admin-placeholder"><p className="error-text">{error}</p></div>
           ) : users.length === 0 ? (
-            <div className="admin-placeholder">
-              <p>No users found.</p>
-            </div>
+            <div className="admin-placeholder"><p>No users found.</p></div>
           ) : (
             <div className="users-table-container">
               {success && <p className="success-text">{success}</p>}
@@ -96,6 +90,7 @@ const UsersSettingsPage = () => {
                     <th>Actions</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {users.map((user) => (
                     <tr key={user.id}>
@@ -110,7 +105,8 @@ const UsersSettingsPage = () => {
                           {user.role}
                         </span>
                       </td>
-                      <td>
+
+                      <td className="actions-cell">
                         {user.role !== "admin" ? (
                           <button
                             className="btn-promote"
@@ -126,6 +122,7 @@ const UsersSettingsPage = () => {
                             Demote to User
                           </button>
                         )}
+
                         <button
                           className="btn-delete"
                           onClick={() => handleDeleteUser(user.id)}
