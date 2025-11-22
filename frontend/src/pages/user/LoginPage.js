@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+// src/pages/user/LoginPage.js
+import React, { useState, useEffect } from 'react';
 import './LoginPage.css';
-import api from '../../services/api'; // centralized API connection
-import { useNavigate } from 'react-router-dom';
+import api from '../../services/api';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // ⚠️ Detect "session expired" redirect message
+  useEffect(() => {
+    if (location.state?.reason === "session_expired") {
+      setError("Your session has expired. Please log in again.");
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,25 +30,31 @@ const LoginPage = () => {
     try {
       setError('');
 
-      // Send login request to backend
+      // 🔥 Send login request
       const response = await api.post('/auth/login', { email, password });
 
-      // Save token + user info
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      // 🔐 Save to sessionStorage (clear when browser closes)
+      sessionStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+
+      // ⏱ Start inactivity timer on login
+      sessionStorage.setItem('lastActivity', Date.now().toString());
 
       console.log('✅ Login successful:', response.data);
 
-      // Redirect user based on role
-      navigate('/');
+      // 🔁 If redirected from protected page → go back
+      const redirectTo = location.state?.from?.pathname || '/';
 
+      navigate(redirectTo, { replace: true });
 
     } catch (err) {
       console.error('❌ Login error:', err);
+
       const message =
         err.response?.data?.message ||
         err.response?.data?.error ||
         'Login failed. Please check your credentials.';
+
       setError(message);
     }
   };

@@ -7,26 +7,36 @@ import './Navbar.css';
 const AppNavbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔄 Watch for route changes or login/logout updates
+  // ✅ Read user from sessionStorage
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+
+  // 🔄 Check login state on route change
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, [location]); // reruns whenever route changes
+  }, [location]);
 
   const handleNavClick = () => setExpanded(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    // 🔥 Clear session
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+
+    // Force state change
     setIsLoggedIn(false);
     setExpanded(false);
-    navigate('/login');
-  };
 
-  const user = JSON.parse(localStorage.getItem('user'));
+    // ⛔ Also remove inactivity timer timestamp
+    sessionStorage.removeItem("lastActivity");
+
+    // Redirect to login
+    navigate("/login");
+  };
 
   return (
     <Navbar
@@ -49,21 +59,27 @@ const AppNavbar = () => {
             <Nav.Link as={NavLink} to="/" onClick={handleNavClick}>
               Home
             </Nav.Link>
+
             <Nav.Link as={NavLink} to="/books" onClick={handleNavClick}>
               Books
             </Nav.Link>
+
             <Nav.Link as={NavLink} to="/donate" onClick={handleNavClick}>
               Donate
             </Nav.Link>
 
-            {/* Dashboard only for admin */}
-            {user?.role === 'admin' && (
-            <Nav.Link as={NavLink} to="/admin/dashboard" onClick={handleNavClick}>
-              Dashboard
-            </Nav.Link>
+            {/* Admin Dashboard only if logged in & admin */}
+            {isLoggedIn && user?.role === "admin" && (
+              <Nav.Link
+                as={NavLink}
+                to="/admin/dashboard"
+                onClick={handleNavClick}
+              >
+                Dashboard
+              </Nav.Link>
             )}
 
-
+            {/* Login or Logout */}
             {!isLoggedIn ? (
               <Nav.Link as={NavLink} to="/login" onClick={handleNavClick}>
                 Login/Register

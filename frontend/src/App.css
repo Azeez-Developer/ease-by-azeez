@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+/* Default React styles */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -29,29 +30,111 @@
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* Navbar background and font style */
+/* ------------------------------------------- */
+/* NAVBAR STYLES — matches your clean design   */
+/* ------------------------------------------- */
+
 .navbar {
-  background: linear-gradient(to right, #e4ecf7, #d5dfee); /* soft, clean gradient */
+  background: linear-gradient(to right, #e4ecf7, #d5dfee);
   padding: 10px 0;
 }
 
-/* Make navbar links larger and bold */
 .navbar .nav-link {
   font-size: 1.1rem;
   font-weight: 600;
   color: #333 !important;
 }
 
-/* Hover effect for links */
 .navbar .nav-link:hover {
   color: #0d6efd !important;
   text-decoration: underline;
+}
+
+
+/* ====================================================== */
+/* 🔐 AUTO-LOGOUT WARNING POPUP — NEW                    */
+/* ====================================================== */
+
+/* Fullscreen fade background */
+.session-warning-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.55); /* dark transparent */
+  backdrop-filter: blur(4px);         /* soft blur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000; /* on top of everything */
+}
+
+/* Popup Box */
+.warning-box {
+  background: #ffffff;
+  padding: 35px 40px;
+  max-width: 420px;
+  text-align: center;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Title */
+.warning-box h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+/* Message */
+.warning-box p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Button */
+.btn-stay {
+  background-color: #0d6efd;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn-stay:hover {
+  background-color: #004bb7;
+  transform: translateY(-2px);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .warning-box {
+    width: 85%;
+    padding: 30px 20px;
+  }
+
+  .warning-box h3 {
+    font-size: 1.4rem;
+  }
+
+  .warning-box p {
+    font-size: 1rem;
+  }
 }
