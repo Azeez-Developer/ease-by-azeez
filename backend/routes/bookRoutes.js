@@ -1,16 +1,22 @@
+// routes/bookRoutes.js
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middlewares/authMiddleware');
+
 const {
   getAllBooks,
   addBook,
   updateBook,
   deleteBook,
-  getBookStatus
+  getBookStatus,
+  generateBooksPDF,   // ✅ NEW
 } = require('../controllers/bookController');
 
 // 📚 Public route - Get all books
 router.get('/', getAllBooks);
+
+// 📄 Public route - Download books list as PDF
+router.get('/pdf', generateBooksPDF);   // ✅ NEW
 
 // ➕ Admin route - Add a new book
 router.post('/', authenticateToken, addBook);

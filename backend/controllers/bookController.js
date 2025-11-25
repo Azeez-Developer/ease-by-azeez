@@ -1,4 +1,6 @@
+// controllers/bookController.js
 const pool = require('../models/db');
+const PDFDocument = require("pdfkit"); // ✅ NEW
 
 // 📚 Get all books (public)
 exports.getAllBooks = async (req, res) => {
@@ -105,5 +107,102 @@ exports.getBookStatus = async (req, res) => {
   } catch (err) {
     console.error('Error fetching book status:', err);
     res.status(500).json({ message: 'Failed to fetch book status' });
+  }
+};
+
+// ============================================
+// 📄 Generate Clean Book Catalog PDF
+// ============================================
+exports.generateBooksPDF = async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM books ORDER BY title ASC");
+    const books = result.rows;
+
+    // Prepare PDF
+    const PDFDocument = require("pdfkit");
+    const doc = new PDFDocument({
+      size: "A4",
+      margins: { top: 80, bottom: 50, left: 40, right: 40 }
+    });
+
+    // Set headers for download
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=books.pdf");
+
+    doc.pipe(res);
+
+    // --------------------------------------------
+    // 📌 TITLE
+    // --------------------------------------------
+    doc
+      .fontSize(22)
+      .font("Helvetica-Bold")
+      .text("Ease by Azeez — Book Catalog", { align: "center" });
+
+    doc.moveDown(1);
+
+    // --------------------------------------------
+    // 📋 TABLE HEADER
+    // --------------------------------------------
+    const tableTop = 130;
+
+    doc
+      .fontSize(12)
+      .font("Helvetica-Bold");
+
+    doc.text("Title", 40, tableTop);
+    doc.text("Author", 220, tableTop);
+    doc.text("Genre", 360, tableTop);
+    doc.text("Status", 480, tableTop);
+
+    // 🟦 Header underline
+    doc.moveTo(40, tableTop + 18)
+       .lineTo(550, tableTop + 18)
+       .strokeColor("#000")
+       .lineWidth(1)
+       .stroke();
+
+    // --------------------------------------------
+    // 📦 TABLE ROWS
+    // --------------------------------------------
+    let y = tableTop + 30;
+
+    doc.fontSize(11).font("Helvetica");
+
+    books.forEach((book) => {
+      if (y > 760) {
+        doc.addPage();
+        y = 80;
+      }
+
+      doc.text(book.title, 40, y, { width: 160 });
+      doc.text(book.author, 220, y, { width: 120 });
+      doc.text(book.genre, 360, y, { width: 100 });
+      doc.text(book.status, 480, y);
+
+      y += 25;
+
+      // Light row separator
+      doc.moveTo(40, y)
+         .lineTo(550, y)
+         .strokeColor("#e0e0e0")
+         .lineWidth(0.5)
+         .stroke();
+      y += 5;
+    });
+
+    // --------------------------------------------
+    // 📌 FOOTER
+    // --------------------------------------------
+    const footerY = 810;
+    const stamp = new Date().toLocaleString();
+
+    doc.fontSize(10).fillColor("#666");
+    doc.text(`Generated on ${stamp}`, 40, footerY, { align: "left" });
+
+    doc.end();
+  } catch (err) {
+    console.error("PDF generation failed:", err);
+    res.status(500).json({ message: "Failed to generate PDF" });
   }
 };

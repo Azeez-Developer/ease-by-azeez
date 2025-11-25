@@ -15,10 +15,29 @@
 .books-subtext {
   font-size: 1.1rem;
   color: #555;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* === NEW: Download PDF button === */
+.btn-download {
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: 0.25s ease;
+}
+
+.btn-download:hover {
+  background-color: #004bb7;
+  transform: translateY(-2px);
 }
 
 .books-placeholder {
@@ -122,6 +141,10 @@
     font-size: 1rem;
   }
 
+  .btn-download {
+    width: 85%;
+  }
+
   .books-table th,
   .books-table td {
     padding: 12px 10px;
@@ -135,6 +158,10 @@
 
   .books-subtext {
     font-size: 0.95rem;
+  }
+
+  .btn-download {
+    width: 90%;
   }
 
   .btn-borrow,

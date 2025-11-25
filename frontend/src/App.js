@@ -32,26 +32,36 @@ import AccessDeniedPage from "./pages/AccessDeniedPage";
 function AppWrapper() {
   const navigate = useNavigate();
 
-  // Modal State
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 min
-    const WARNING_TIME = 60 * 1000; // show warning 1 min before logout
+    const WARNING_TIME = 60 * 1000; // 1 min before logout
 
     let logoutTimer;
     let warningTimer;
     let countdownInterval;
 
     const resetTimers = () => {
+      const token = sessionStorage.getItem("token");
+
+      // ⛔ If user is NOT logged in → DO NOTHING
+      if (!token) {
+        setShowWarning(false);
+        clearTimeout(logoutTimer);
+        clearTimeout(warningTimer);
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      // ✔ Logged in → enable timers
       clearTimeout(logoutTimer);
       clearTimeout(warningTimer);
       clearInterval(countdownInterval);
-
       setShowWarning(false);
 
-      // 🟡 Show warning at: T - 60 seconds
+      // 🟡 Show warning popup at T - 60 seconds
       warningTimer = setTimeout(() => {
         setShowWarning(true);
         setSecondsLeft(60);
@@ -66,7 +76,7 @@ function AppWrapper() {
         }, 1000);
       }, INACTIVITY_LIMIT - WARNING_TIME);
 
-      // 🔴 Auto logout
+      // 🔴 Auto logout at T = 5 minutes
       logoutTimer = setTimeout(() => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
@@ -74,11 +84,14 @@ function AppWrapper() {
       }, INACTIVITY_LIMIT);
     };
 
+    // Start timers on load (only if logged in)
     resetTimers();
 
+    // Activity listeners
     const events = ["mousemove", "keydown", "click", "scroll"];
     events.forEach((evt) => window.addEventListener(evt, resetTimers));
 
+    // Remove session on browser close
     window.addEventListener("beforeunload", () => {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");
@@ -101,8 +114,7 @@ function AppWrapper() {
           secondsLeft={secondsLeft}
           onStayLoggedIn={() => {
             setShowWarning(false);
-            // fire activity to reset timer
-            window.dispatchEvent(new Event("mousemove"));
+            window.dispatchEvent(new Event("mousemove")); // reset timer
           }}
           onLogout={() => {
             sessionStorage.removeItem("token");

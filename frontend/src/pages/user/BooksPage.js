@@ -1,3 +1,4 @@
+// src/pages/user/BooksPage.js
 import React, { useEffect, useState } from "react";
 import "./BooksPage.css";
 import api from "../../services/api";
@@ -32,16 +33,34 @@ const BooksPage = () => {
       setError("");
       setSuccess("");
       const response = await api.post("/borrow", { book_id: bookId });
-      console.log("✅ Book borrowed:", response.data);
       setSuccess("Book borrowed successfully!");
-      fetchBooks(); // Refresh list
+      fetchBooks();
     } catch (err) {
-      console.error("❌ Error borrowing book:", err);
       const message =
         err.response?.data?.message ||
         err.response?.data?.error ||
         "Failed to borrow book.";
       setError(message);
+    }
+  };
+
+  // Download PDF
+  const handleDownloadPDF = async () => {
+    try {
+      const response = await api.get("/books/pdf", {
+        responseType: "blob",
+      });
+
+      const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.setAttribute("download", "EaseByAzeez_BookCatalog.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("❌ PDF download failed:", err);
+      setError("Failed to generate PDF.");
     }
   };
 
@@ -51,6 +70,11 @@ const BooksPage = () => {
       <p className="books-subtext">
         Browse through the collection of free books you can borrow.
       </p>
+
+      {/* === Download PDF button === */}
+      <button className="btn-download" onClick={handleDownloadPDF}>
+        Download Books PDF
+      </button>
 
       {success && <p className="success-text">{success}</p>}
       {error && <p className="error-text">{error}</p>}
