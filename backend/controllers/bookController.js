@@ -111,7 +111,7 @@ exports.getBookStatus = async (req, res) => {
 };
 
 // ============================================
-// 📄 Generate Clean Book Catalog PDF (NO FOOTER)
+// 📄 Generate Clean Book Catalog PDF (TITLE ON EVERY PAGE)
 // ============================================
 exports.generateBooksPDF = async (req, res) => {
   try {
@@ -124,53 +124,60 @@ exports.generateBooksPDF = async (req, res) => {
       margins: { top: 80, bottom: 50, left: 40, right: 40 }
     });
 
-    // Set headers for download
+    // Send headers
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "attachment; filename=books.pdf");
 
     doc.pipe(res);
 
     // --------------------------------------------
-    // 📌 TITLE
+    // 📌 FUNCTION: Draw Title + Header
     // --------------------------------------------
-    doc
-      .fontSize(22)
-      .font("Helvetica-Bold")
-      .text("Ease by Azeez — Book Catalog", { align: "center" });
+    function drawHeader() {
+      // Title
+      doc
+        .fontSize(22)
+        .font("Helvetica-Bold")
+        .fillColor("#000")
+        .text("Ease by Azeez — Book Catalog", { align: "center" });
 
-    doc.moveDown(1);
+      doc.moveDown(1);
 
-    // --------------------------------------------
-    // 📋 TABLE HEADER
-    // --------------------------------------------
-    const tableTop = 130;
+      const headerY = doc.y;
 
-    doc.fontSize(12).font("Helvetica-Bold");
-    doc.text("Title", 40, tableTop);
-    doc.text("Author", 220, tableTop);
-    doc.text("Genre", 360, tableTop);
-    doc.text("Status", 480, tableTop);
+      // Column labels
+      doc.font("Helvetica-Bold").fontSize(12);
+      doc.text("Title", 40, headerY);
+      doc.text("Author", 220, headerY);
+      doc.text("Genre", 360, headerY);
+      doc.text("Status", 480, headerY);
 
-    // Header underline
-    doc.moveTo(40, tableTop + 18)
-      .lineTo(550, tableTop + 18)
-      .strokeColor("#000")
-      .lineWidth(1)
-      .stroke();
+      // Underline
+      doc
+        .moveTo(40, headerY + 18)
+        .lineTo(550, headerY + 18)
+        .strokeColor("#000")
+        .stroke();
+
+      return headerY + 30;
+    }
+
+    // Draw header on FIRST page
+    let y = drawHeader();
+
+    doc.font("Helvetica").fontSize(11);
 
     // --------------------------------------------
     // 📦 TABLE ROWS
     // --------------------------------------------
-    let y = tableTop + 30;
-
-    doc.fontSize(11).font("Helvetica");
-
     books.forEach((book) => {
+      // Need new page?
       if (y > 760) {
         doc.addPage();
-        y = 80;
+        y = drawHeader(); // Draw title + table header again
       }
 
+      // Table data
       doc.text(book.title, 40, y, { width: 160 });
       doc.text(book.author, 220, y, { width: 120 });
       doc.text(book.genre, 360, y, { width: 100 });
@@ -178,18 +185,16 @@ exports.generateBooksPDF = async (req, res) => {
 
       y += 25;
 
-      // Light row separator
-      doc.moveTo(40, y)
+      // Row underline
+      doc
+        .moveTo(40, y)
         .lineTo(550, y)
         .strokeColor("#e0e0e0")
         .lineWidth(0.5)
         .stroke();
 
-      y += 5;
+      y += 8;
     });
-
-    // ❌ FOOTER REMOVED  
-    // (No timestamp, no extra page)
 
     doc.end();
 
@@ -198,4 +203,5 @@ exports.generateBooksPDF = async (req, res) => {
     res.status(500).json({ message: "Failed to generate PDF" });
   }
 };
+
 
