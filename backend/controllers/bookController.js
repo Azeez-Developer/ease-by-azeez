@@ -111,14 +111,13 @@ exports.getBookStatus = async (req, res) => {
 };
 
 // ============================================
-// 📄 Generate Clean Book Catalog PDF
+// 📄 Generate Clean Book Catalog PDF (NO FOOTER)
 // ============================================
 exports.generateBooksPDF = async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM books ORDER BY title ASC");
     const books = result.rows;
 
-    // Prepare PDF
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({
       size: "A4",
@@ -146,21 +145,18 @@ exports.generateBooksPDF = async (req, res) => {
     // --------------------------------------------
     const tableTop = 130;
 
-    doc
-      .fontSize(12)
-      .font("Helvetica-Bold");
-
+    doc.fontSize(12).font("Helvetica-Bold");
     doc.text("Title", 40, tableTop);
     doc.text("Author", 220, tableTop);
     doc.text("Genre", 360, tableTop);
     doc.text("Status", 480, tableTop);
 
-    // 🟦 Header underline
+    // Header underline
     doc.moveTo(40, tableTop + 18)
-       .lineTo(550, tableTop + 18)
-       .strokeColor("#000")
-       .lineWidth(1)
-       .stroke();
+      .lineTo(550, tableTop + 18)
+      .strokeColor("#000")
+      .lineWidth(1)
+      .stroke();
 
     // --------------------------------------------
     // 📦 TABLE ROWS
@@ -184,25 +180,22 @@ exports.generateBooksPDF = async (req, res) => {
 
       // Light row separator
       doc.moveTo(40, y)
-         .lineTo(550, y)
-         .strokeColor("#e0e0e0")
-         .lineWidth(0.5)
-         .stroke();
+        .lineTo(550, y)
+        .strokeColor("#e0e0e0")
+        .lineWidth(0.5)
+        .stroke();
+
       y += 5;
     });
 
-    // --------------------------------------------
-    // 📌 FOOTER
-    // --------------------------------------------
-    const footerY = 810;
-    const stamp = new Date().toLocaleString();
-
-    doc.fontSize(10).fillColor("#666");
-    doc.text(`Generated on ${stamp}`, 40, footerY, { align: "left" });
+    // ❌ FOOTER REMOVED  
+    // (No timestamp, no extra page)
 
     doc.end();
+
   } catch (err) {
     console.error("PDF generation failed:", err);
     res.status(500).json({ message: "Failed to generate PDF" });
   }
 };
+
